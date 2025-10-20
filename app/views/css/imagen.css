@@ -1,0 +1,445 @@
+/* ========================================
+   SISTEMA DE GESTIÓN DE IMÁGENES - CSS CON MODO OSCURO
+   imagen.css
+   ======================================== */
+
+/* ========== VARIABLES MODO CLARO ========== */
+:root {
+    --primary-color: #3273dc;
+    --success-color: #48c774;
+    --warning-color: #ffdd57;
+    --danger-color: #f14668;
+    --info-color: #3298dc;
+    --grey-light: #b5b5b5;
+    --grey-lighter: #dbdbdb;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.2);
+    --transition: all 0.3s ease;
+    
+    /* Colores de fondo y texto */
+    --bg-body: #f5f5f5;
+    --bg-box: #ffffff;
+    --text-primary: #363636;
+    --text-secondary: #7a7a7a;
+    --border-color: #dbdbdb;
+}
+
+/* ========== VARIABLES MODO OSCURO ========== */
+.dark-mode {
+    --primary-color: #5b8def;
+    --success-color: #5dd68d;
+    --warning-color: #ffe66d;
+    --danger-color: #ff6b9d;
+    --info-color: #56b8f5;
+    --grey-light: #8a8a8a;
+    --grey-lighter: #4a4a4a;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+    
+    /* Colores de fondo y texto modo oscuro */
+    --bg-body: #1a1a1a;
+    --bg-box: #2d2d2d;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --border-color: #4a4a4a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ========== HEADER ========== */
+.is-fluid {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+}
+
+h1, .title {
+    color: white;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ========== BOTÓN MODO OSCURO ========== */
+#darkModeToggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#darkModeToggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+#darkModeToggle:active {
+    transform: scale(0.95);
+}
+
+.dark-mode #darkModeToggle {
+    background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+}
+
+/* ========== TABS ========== */
+.tabs {
+    border-bottom: 2px solid var(--border-color);
+    margin-bottom: 2rem !important;
+}
+
+.tabs li {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.dark-mode .tabs li:hover {
+    background-color: #3a3a3a;
+}
+
+.tabs li:hover {
+    background-color: #f5f5f5;
+}
+
+.tabs li.is-active a {
+    border-bottom: 3px solid var(--primary-color);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.tabs a {
+    transition: var(--transition);
+    padding: 0.75em 1em;
+    color: var(--text-primary);
+}
+
+/* ========== TAB CONTENT ========== */
+.tab-content {
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== BOXES ========== */
+.box {
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    background-color: var(--bg-box);
+    color: var(--text-primary);
+}
+
+.box:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* ========== INFO PRODUCTO ========== */
+#infoProducto {
+    border-left: 4px solid var(--info-color);
+    animation: slideInLeft 0.4s ease;
+}
+
+.dark-mode #infoProducto {
+    background: linear-gradient(135deg, #1e3a5f 0%, #2d1b3d 100%);
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+#infoProducto .tag {
+    font-size: 1rem;
+    padding: 0.5em 1em;
+    font-weight: 600;
+}
+
+/* ========== FILE INPUT ========== */
+.file-cta {
+    background: linear-gradient(135deg, var(--info-color) 0%, #2366d1 100%);
+    border: none;
+    color: white;
+    transition: var(--transition);
+}
+
+.file-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.file-name {
+    border-color: var(--border-color);
+    background-color: var(--bg-box);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+/* ========== PREVIEW ========== */
+#previewImagen {
+    border: 3px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    background-color: var(--bg-box);
+    animation: fadeIn 0.3s ease;
+}
+
+#previewImagen img {
+    max-height: 350px;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+}
+
+/* ========== GALERÍA ========== */
+#galeriaImagenes .box {
+    padding: 1rem;
+    border: 1px solid transparent;
+    background: var(--bg-box);
+}
+
+#galeriaImagenes .box:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+#galeriaImagenes figure {
+    margin: 0 0 1rem 0 !important;
+    border-radius: 8px;
+    background: var(--bg-body);
+}
+
+#galeriaImagenes img {
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+#galeriaImagenes .box:hover img {
+    transform: scale(1.05);
+}
+
+/* ========== SIN IMÁGENES ========== */
+#sinImagenes {
+    border: 3px dashed var(--border-color);
+    border-radius: 12px;
+    background: var(--bg-box);
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+#sinImagenes .fa-image {
+    color: var(--grey-light);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ========== BOTONES ========== */
+.button {
+    transition: var(--transition);
+    font-weight: 500;
+    border-radius: 8px;
+}
+
+.button:hover:not(:disabled):not(.is-loading) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+#btnCargarImagen.is-success {
+    background: linear-gradient(135deg, var(--success-color) 0%, #38b160 100%);
+    border: none;
+}
+
+#btnCargarImagen.is-warning {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    border: none;
+    animation: pulseWarning 2s ease-in-out infinite;
+}
+
+@keyframes pulseWarning {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 20px rgba(255, 152, 0, 0.5);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 30px rgba(255, 152, 0, 0.7);
+    }
+}
+
+#btnLimpiar {
+    background: var(--bg-box);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+/* ========== BOTONES GALERÍA ========== */
+.btn-editar-imagen {
+    background: linear-gradient(135deg, #ffeb3b 0%, #ffc107 100%);
+    border: none;
+    color: #333;
+}
+
+.btn-editar-imagen:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(255, 193, 7, 0.4);
+}
+
+.btn-eliminar-imagen {
+    background: linear-gradient(135deg, var(--danger-color) 0%, #dc3545 100%);
+    border: none;
+    color: white;
+}
+
+.btn-eliminar-imagen:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* ========== FORMULARIOS ========== */
+.label {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.input,
+.select select {
+    border-radius: 8px;
+    border: 2px solid var(--border-color);
+    background-color: var(--bg-box);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+.input:focus,
+.select select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(50, 115, 220, 0.15);
+}
+
+.dark-mode .input:focus,
+.dark-mode .select select:focus {
+    box-shadow: 0 0 0 3px rgba(91, 143, 239, 0.25);
+}
+
+/* ========== HELP TEXT ========== */
+.help {
+    color: var(--text-secondary);
+}
+
+/* ========== NOTIFICATION ========== */
+.notification.is-info.is-light {
+    border-left: 4px solid var(--info-color);
+}
+
+.dark-mode .notification.is-info.is-light {
+    background-color: rgba(50, 115, 220, 0.1);
+    color: var(--text-primary);
+}
+
+.dark-mode .notification.is-warning.is-light {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--text-primary);
+}
+
+/* ========== TAGS ========== */
+.tag.is-info {
+    background: linear-gradient(135deg, var(--info-color) 0%, #2366d1 100%);
+}
+
+.tag.is-success {
+    background: linear-gradient(135deg, var(--success-color) 0%, #38b160 100%);
+}
+
+.tag.is-danger {
+    background: linear-gradient(135deg, var(--danger-color) 0%, #dc3545 100%);
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-box);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--primary-color) 0%, #2366d1 100%);
+    border-radius: 10px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media screen and (max-width: 768px) {
+    #darkModeToggle {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .tabs {
+        overflow-x: auto;
+    }
+}
+
+
+/* ========== UTILIDADES ========== */
+.has-text-weight-bold { font-weight: 700 !important; }
+.has-text-weight-semibold { font-weight: 600 !important; }
+.mb-0 { margin-bottom: 0 !important; }
+.mt-2 { margin-top: 0.5rem !important; }
+.mb-2 { margin-bottom: 0.5rem !important; }
+.mb-3 { margin-bottom: 1rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+.py-6 { padding-top: 3rem !important; padding-bottom: 3rem !important; }
+
+/* ========== FIN ========== */

@@ -1,0 +1,1369 @@
+
+=== INSERCIÓN EN BD 2025-10-16 19:57:20 ===
+Total productos a insertar: 2
+
+--- Producto #1 ---
+ID: 118 | Nombre: 'Pantalón Deportivo Slim Gris' | Clase: 1
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '5'
+  NUM_ID_CLASE = '1'
+  VCH_NOMBRE = 'Pantalón Deportivo Slim Gris'
+  VCH_MARCA = 'Puma'
+  VCH_MODELO = 'PM-SD2024-L'
+  VCH_DESCRIPCION = 'Pantalón deportivo ajustado ideal para gimnasio'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa Deportiva'
+  VCH_PAIS_PRODUCCION = 'Perú'
+  VCH_BASIC_COLOR = 'Gris'
+  VCH_COLOR = 'Gris Oscuro'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-PUMA-003'
+  VCH_CODIGO_BARRAS = '7503456789012'
+  VCH_SKU_PADRE = 'PADRE-PUMA-001'
+  NUM_QUANTITY_FALABELLA = '10'
+  NUM_PRICE_FALABELLA = '129.90'
+  NUM_SALE_PRICE_FALABELLA = '0.00'
+  FEC_SALE_START_DATE = 'NULL'
+  FEC_SALE_END_DATE = 'NULL'
+  VCH_FIT = 'Slim Fit'
+  VCH_COSTUME_GENRE = 'Hombre'
+  VCH_PANTS_TYPE = 'Slim Fit'
+  VCH_COMPOSITION = '85% Poliéster 15% Elastano'
+  VCH_MATERIAL_VESTUARIO = 'Poliéster'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 pantalón deportivo'
+  NUM_ANCHO_PAQUETE = '35.00'
+  NUM_LARGO_PAQUETE = '45.00'
+  NUM_ALTO_PAQUETE = '8.00'
+  NUM_PESO_PAQUETE = '350.00'
+  VCH_IMAGEN_PRINCIPAL = 'https://ejemplo.com/pantalon-gris-1.jpg'
+  VCH_IMAGEN2 = 'https://ejemplo.com/pantalon-gris-2.jpg'
+  VCH_IMAGEN3 = ''
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Estándar'
+  VCH_FORM_ENV = 'Envío Estándar'
+  VCH_COSTO_EN = 'Vendedor'
+  VCH_RETIRO = 'No'
+  VCH_PESO_PROD = '350.00'
+  VCH_LONG_PROD = '45.00'
+  VCH_ANCHO_PROD = '35.00'
+  VCH_ALTURA_PROD = '8.00'
+  VCH_TIPO_CUE = ''
+  VCH_TIPO_PUN = 'Elástica'
+  VCH_TIPO_CIER = 'Cierre metálico'
+  VCH_TIPO_GARANT = '1 año'
+  VCH_TABLA_TALLA = 'Talla L'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:20'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'FEC_SALE_START_DATE' cannot be null
+SQL State: 23000
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #2 ---
+ID: 118 | Nombre: 'Mochila Escolar Azul 30L' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '50'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'Mochila Escolar Azul 30L'
+  VCH_MARCA = 'JanSport'
+  VCH_MODELO = 'JS-ESC-30L'
+  VCH_DESCRIPCION = 'Mochila escolar resistente con múltiples compartimentos'
+  VCH_CATEGORIA_PRIMARIA = 'Accesorios'
+  VCH_PAIS_PRODUCCION = 'China'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul Rey'
+  VCH_SIZE = 'Única'
+  VCH_SKU_VENDEDOR = 'SKU-JANSPORT-004'
+  VCH_CODIGO_BARRAS = '7504567890123'
+  VCH_SKU_PADRE = 'PADRE-JANSPORT-001'
+  NUM_QUANTITY_FALABELLA = '30'
+  NUM_PRICE_FALABELLA = '149.90'
+  NUM_SALE_PRICE_FALABELLA = '129.90'
+  FEC_SALE_START_DATE = '2024-10-20 00:00:00'
+  FEC_SALE_END_DATE = '2024-11-30 23:59:59'
+  VCH_FIT = 'Standard'
+  VCH_COSTUME_GENRE = 'Unisex'
+  VCH_PANTS_TYPE = ''
+  VCH_COMPOSITION = ''
+  VCH_MATERIAL_VESTUARIO = '100% Poliéster'
+  VCH_CONDICION_PRODUCTO = 'Poliéster'
+  VCH_GARANTIA_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_VENDEDOR = '12 meses'
+  VCH_CONTENIDO_PAQUETE = '6 meses'
+  NUM_ANCHO_PAQUETE = '1 mochila'
+  NUM_LARGO_PAQUETE = '40.00'
+  NUM_ALTO_PAQUETE = '50.00'
+  NUM_PESO_PAQUETE = '20.00'
+  VCH_IMAGEN_PRINCIPAL = '600.00'
+  VCH_IMAGEN2 = 'https://ejemplo.com/mochila-azul-1.jpg'
+  VCH_IMAGEN3 = 'https://ejemplo.com/mochila-azul-2.jpg'
+  VCH_IMAGEN4 = 'https://ejemplo.com/mochila-azul-3.jpg'
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Premium'
+  VCH_FORM_ENV = 'Envío Estándar'
+  VCH_COSTO_EN = 'Vendedor'
+  VCH_RETIRO = 'Sí'
+  VCH_PESO_PROD = '600.00'
+  VCH_LONG_PROD = '50.00'
+  VCH_ANCHO_PROD = '40.00'
+  VCH_ALTURA_PROD = '20.00'
+  VCH_TIPO_CUE = ''
+  VCH_TIPO_PUN = ''
+  VCH_TIPO_CIER = 'Cierre de cremallera'
+  VCH_TIPO_GARANT = '1 año'
+  VCH_TABLA_TALLA = 'Única'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:20'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[HY000]: General error: 1366 Incorrect decimal value: '1 mochila' for column 'NUM_ANCHO_PAQUETE' at row 1
+SQL State: HY000
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+
+=== RESUMEN FINAL ===
+Insertados: 0
+Errores: 2
+Porcentaje éxito: 0%
+
+
+=== INSERCIÓN EN BD 2025-10-16 19:57:49 ===
+Total productos a insertar: 3
+
+--- Producto #1 ---
+ID: 118 | Nombre: 'POLERAZA' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'POLERAZA'
+  VCH_MARCA = 'GENERICO'
+  VCH_MODELO = 'CASUAL2024'
+  VCH_DESCRIPCION = 'Camisa de algodÃ³n 100% para hombre'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Camisas'
+  VCH_PAIS_PRODUCCION = 'Peru'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul Marino'
+  VCH_SIZE = 'M'
+  VCH_SKU_VENDEDOR = 'SKU-CAM-001'
+  VCH_CODIGO_BARRAS = '7.50E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-001'
+  NUM_QUANTITY_FALABELLA = '50'
+  NUM_PRICE_FALABELLA = '89.9'
+  NUM_SALE_PRICE_FALABELLA = '79.9'
+  FEC_SALE_START_DATE = '15/01/2025 00:00:00'
+  FEC_SALE_END_DATE = '28/02/2025 00:00:00'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'Ninguno'
+  VCH_COMPOSITION = '100% AlgodÃ³n'
+  VCH_MATERIAL_VESTUARIO = 'AlgodÃ³n'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 camisa en bolsa'
+  NUM_ANCHO_PAQUETE = '30'
+  NUM_LARGO_PAQUETE = '40'
+  NUM_ALTO_PAQUETE = '5'
+  NUM_PESO_PAQUETE = '0.3'
+  VCH_IMAGEN_PRINCIPAL = 'https://ejemplo.com/img1.jpg'
+  VCH_IMAGEN2 = 'https://ejemplo.com/img2.jpg'
+  VCH_IMAGEN3 = 'https://ejemplo.com/img3.jpg'
+  VCH_IMAGEN4 = 'https://ejemplo.com/img4.jpg'
+  VCH_IMAGEN5 = 'https://ejemplo.com/img5.jpg'
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = ''
+  VCH_TIPO_PUBLI = 'PEN'
+  VCH_FORM_ENV = 'Premium'
+  VCH_COSTO_EN = 'EnvÃ­o a domicilio'
+  VCH_RETIRO = 'Gratis'
+  VCH_PESO_PROD = 'Si'
+  VCH_LONG_PROD = '300'
+  VCH_ANCHO_PROD = '40'
+  VCH_ALTURA_PROD = '30'
+  VCH_TIPO_CUE = '5'
+  VCH_TIPO_PUN = 'Cuello clÃ¡sico'
+  VCH_TIPO_CIER = 'PuÃ±o con botÃ³n'
+  VCH_TIPO_GARANT = 'Botones'
+  VCH_TABLA_TALLA = 'Contra defectos'
+  VCH_TAMANIO_PROD = 'M'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:49'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '15/01/2025 00:00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #2 ---
+ID: 118 | Nombre: 'POLITA' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'POLITA'
+  VCH_MARCA = 'NIKE'
+  VCH_MODELO = 'SPORT-PRO'
+  VCH_DESCRIPCION = 'Polera deportiva transpirable'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Deportiva'
+  VCH_PAIS_PRODUCCION = 'China'
+  VCH_BASIC_COLOR = 'Negro'
+  VCH_COLOR = 'Negro'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-POL-002'
+  VCH_CODIGO_BARRAS = '7.51E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-002'
+  NUM_QUANTITY_FALABELLA = '30'
+  NUM_PRICE_FALABELLA = '129.9'
+  NUM_SALE_PRICE_FALABELLA = '99.9'
+  FEC_SALE_START_DATE = '1/02/2025'
+  FEC_SALE_END_DATE = '31/03/2025 00:00:00'
+  VCH_FIT = 'Slim'
+  VCH_COSTUME_GENRE = 'Unisex'
+  VCH_PANTS_TYPE = 'Ninguno'
+  VCH_COMPOSITION = 'PoliÃ©ster 100%'
+  VCH_MATERIAL_VESTUARIO = 'PoliÃ©ster'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '6 meses'
+  VCH_GARANTIA_VENDEDOR = '3 meses'
+  VCH_CONTENIDO_PAQUETE = '1 polera en empaque'
+  NUM_ANCHO_PAQUETE = '28'
+  NUM_LARGO_PAQUETE = '38'
+  NUM_ALTO_PAQUETE = '4'
+  NUM_PESO_PAQUETE = '0.25'
+  VCH_IMAGEN_PRINCIPAL = 'https://ejemplo.com/pol1.jpg'
+  VCH_IMAGEN2 = 'https://ejemplo.com/pol2.jpg'
+  VCH_IMAGEN3 = ''
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'EstÃ¡ndar'
+  VCH_FORM_ENV = 'EnvÃ­o express'
+  VCH_COSTO_EN = '10 soles'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '250'
+  VCH_LONG_PROD = '38'
+  VCH_ANCHO_PROD = '28'
+  VCH_ALTURA_PROD = '4'
+  VCH_TIPO_CUE = 'Cuello redondo'
+  VCH_TIPO_PUN = 'Sin puÃ±o'
+  VCH_TIPO_CIER = 'Sin cierre'
+  VCH_TIPO_GARANT = 'Contra defectos'
+  VCH_TABLA_TALLA = 'L'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:49'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '1/02/2025' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #3 ---
+ID: 118 | Nombre: 'POLILA' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'POLILA'
+  VCH_MARCA = 'LEVIS'
+  VCH_MODELO = '501-ORIGINAL'
+  VCH_DESCRIPCION = 'Polera deportiva transpirable'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Pantalones'
+  VCH_PAIS_PRODUCCION = 'Mexico'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul Denim'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-PAN-003'
+  VCH_CODIGO_BARRAS = '7.50E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-003'
+  NUM_QUANTITY_FALABELLA = '25'
+  NUM_PRICE_FALABELLA = '199.9'
+  NUM_SALE_PRICE_FALABELLA = '179.9'
+  FEC_SALE_START_DATE = '1/02/2025'
+  FEC_SALE_END_DATE = '31/03/2025 00:00:00'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'Jean clÃ¡sico'
+  VCH_COMPOSITION = '98% AlgodÃ³n 2% Elastano'
+  VCH_MATERIAL_VESTUARIO = 'Denim'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 pantalÃ³n en bolsa'
+  NUM_ANCHO_PAQUETE = '35'
+  NUM_LARGO_PAQUETE = '45'
+  NUM_ALTO_PAQUETE = '6'
+  NUM_PESO_PAQUETE = '0.5'
+  VCH_IMAGEN_PRINCIPAL = 'https://ejemplo.com/pan1.jpg'
+  VCH_IMAGEN2 = 'https://ejemplo.com/pan2.jpg'
+  VCH_IMAGEN3 = 'https://ejemplo.com/pan3.jpg'
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Premium'
+  VCH_FORM_ENV = 'EnvÃ­o estÃ¡ndar'
+  VCH_COSTO_EN = 'Gratis'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '500'
+  VCH_LONG_PROD = '45'
+  VCH_ANCHO_PROD = '35'
+  VCH_ALTURA_PROD = '6'
+  VCH_TIPO_CUE = 'Sin cuello'
+  VCH_TIPO_PUN = 'Sin puÃ±o'
+  VCH_TIPO_CIER = 'Cierre metÃ¡lico'
+  VCH_TIPO_GARANT = 'Contra defectos'
+  VCH_TABLA_TALLA = '32'
+  VCH_TAMANIO_PROD = 'Talla 32'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:49'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '1/02/2025' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+
+=== RESUMEN FINAL ===
+Insertados: 0
+Errores: 3
+Porcentaje éxito: 0%
+
+
+=== INSERCIÓN EN BD 2025-10-16 19:57:57 ===
+Total productos a insertar: 3
+
+--- Producto #1 ---
+ID: 118 | Nombre: 'CAMISA CASUAL HOMBRE' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '20'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'CAMISA CASUAL HOMBRE'
+  VCH_MARCA = 'GENERICO'
+  VCH_MODELO = 'CASUAL2024'
+  VCH_DESCRIPCION = 'Camisa de algodón 100% para hombre'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Camisas'
+  VCH_PAIS_PRODUCCION = 'Peru'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul Marino'
+  VCH_SIZE = 'M'
+  VCH_SKU_VENDEDOR = 'SKU-CAM-001'
+  VCH_CODIGO_BARRAS = '7.50E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-001'
+  NUM_QUANTITY_FALABELLA = '50'
+  NUM_PRICE_FALABELLA = '89.9'
+  NUM_SALE_PRICE_FALABELLA = '79.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00:00'
+  FEC_SALE_END_DATE = '31/12/2025 00:00:00'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'Ninguno'
+  VCH_COMPOSITION = '100% Algodón'
+  VCH_MATERIAL_VESTUARIO = 'Algodón'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 camisa en bolsa'
+  NUM_ANCHO_PAQUETE = '30'
+  NUM_LARGO_PAQUETE = '40'
+  NUM_ALTO_PAQUETE = '5'
+  NUM_PESO_PAQUETE = '0.3'
+  VCH_IMAGEN_PRINCIPAL = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad.webp'
+  VCH_IMAGEN2 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/1.webp'
+  VCH_IMAGEN3 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad%20(3).webp'
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = ''
+  VCH_TIPO_PUBLI = 'PEN'
+  VCH_FORM_ENV = 'Premium'
+  VCH_COSTO_EN = 'Envío a domicilio'
+  VCH_RETIRO = 'Gratis'
+  VCH_PESO_PROD = 'Si'
+  VCH_LONG_PROD = '300'
+  VCH_ANCHO_PROD = '40'
+  VCH_ALTURA_PROD = '30'
+  VCH_TIPO_CUE = '5'
+  VCH_TIPO_PUN = 'Cuello clásico'
+  VCH_TIPO_CIER = 'Puño con botón'
+  VCH_TIPO_GARANT = 'Botones'
+  VCH_TABLA_TALLA = 'Contra defectos'
+  VCH_TAMANIO_PROD = 'M'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:57'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #2 ---
+ID: 118 | Nombre: 'ESTE SI ES POLERA' | Clase: 1
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '15'
+  NUM_ID_CLASE = '1'
+  VCH_NOMBRE = 'ESTE SI ES POLERA'
+  VCH_MARCA = 'GENERICO'
+  VCH_MODELO = 'SPORT-PRO'
+  VCH_DESCRIPCION = 'Polera deportiva transpirable'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Deportiva'
+  VCH_PAIS_PRODUCCION = 'China'
+  VCH_BASIC_COLOR = 'Negro'
+  VCH_COLOR = 'Negro'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-POL-002'
+  VCH_CODIGO_BARRAS = '7.51E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-002'
+  NUM_QUANTITY_FALABELLA = '30'
+  NUM_PRICE_FALABELLA = '129.9'
+  NUM_SALE_PRICE_FALABELLA = '99.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00:00'
+  FEC_SALE_END_DATE = '31/01/2026 00:00:00'
+  VCH_FIT = 'Slim'
+  VCH_COSTUME_GENRE = 'Unisex'
+  VCH_PANTS_TYPE = 'Ninguno'
+  VCH_COMPOSITION = 'Poliéster 100%'
+  VCH_MATERIAL_VESTUARIO = 'Poliéster'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '6 meses'
+  VCH_GARANTIA_VENDEDOR = '3 meses'
+  VCH_CONTENIDO_PAQUETE = '1 polera en empaque'
+  NUM_ANCHO_PAQUETE = '28'
+  NUM_LARGO_PAQUETE = '38'
+  NUM_ALTO_PAQUETE = '4'
+  NUM_PESO_PAQUETE = '0.25'
+  VCH_IMAGEN_PRINCIPAL = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad.webp'
+  VCH_IMAGEN2 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/1.webp'
+  VCH_IMAGEN3 = ''
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Estándar'
+  VCH_FORM_ENV = 'Envío express'
+  VCH_COSTO_EN = '10 soles'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '250'
+  VCH_LONG_PROD = '38'
+  VCH_ANCHO_PROD = '28'
+  VCH_ALTURA_PROD = '4'
+  VCH_TIPO_CUE = 'Cuello redondo'
+  VCH_TIPO_PUN = 'Sin puño'
+  VCH_TIPO_CIER = 'Sin cierre'
+  VCH_TIPO_GARANT = 'Contra defectos'
+  VCH_TABLA_TALLA = 'L'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:57'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #3 ---
+ID: 118 | Nombre: 'PANTALON JEAN CLASICO' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '10'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'PANTALON JEAN CLASICO'
+  VCH_MARCA = 'LEVIS'
+  VCH_MODELO = '501-ORIGINAL'
+  VCH_DESCRIPCION = 'Pantalón jean corte clásico'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Pantalones'
+  VCH_PAIS_PRODUCCION = 'Mexico'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul Denim'
+  VCH_SIZE = '32'
+  VCH_SKU_VENDEDOR = 'SKU-PAN-003'
+  VCH_CODIGO_BARRAS = '7.50E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-003'
+  NUM_QUANTITY_FALABELLA = '25'
+  NUM_PRICE_FALABELLA = '199.9'
+  NUM_SALE_PRICE_FALABELLA = '179.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00:00'
+  FEC_SALE_END_DATE = '31/12/2025 00:00:00'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'Jean clásico'
+  VCH_COMPOSITION = '98% Algodón 2% Elastano'
+  VCH_MATERIAL_VESTUARIO = 'Denim'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 pantalón en bolsa'
+  NUM_ANCHO_PAQUETE = '35'
+  NUM_LARGO_PAQUETE = '45'
+  NUM_ALTO_PAQUETE = '6'
+  NUM_PESO_PAQUETE = '0.5'
+  VCH_IMAGEN_PRINCIPAL = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad.webp'
+  VCH_IMAGEN2 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/1.webp'
+  VCH_IMAGEN3 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad%20(3).webp'
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Premium'
+  VCH_FORM_ENV = 'Envío estándar'
+  VCH_COSTO_EN = 'Gratis'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '500'
+  VCH_LONG_PROD = '45'
+  VCH_ANCHO_PROD = '35'
+  VCH_ALTURA_PROD = '6'
+  VCH_TIPO_CUE = 'Sin cuello'
+  VCH_TIPO_PUN = 'Sin puño'
+  VCH_TIPO_CIER = 'Cierre metálico'
+  VCH_TIPO_GARANT = 'Contra defectos'
+  VCH_TABLA_TALLA = '32'
+  VCH_TAMANIO_PROD = 'Talla32'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:57'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+
+=== RESUMEN FINAL ===
+Insertados: 0
+Errores: 3
+Porcentaje éxito: 0%
+
+
+=== INSERCIÓN EN BD 2025-10-16 19:57:59 ===
+Total productos a insertar: 3
+
+--- Producto #1 ---
+ID: 118 | Nombre: 'CAMISA CASUAL HOMBRE' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '20'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'CAMISA CASUAL HOMBRE'
+  VCH_MARCA = 'GENERICO'
+  VCH_MODELO = 'CASUAL2024'
+  VCH_DESCRIPCION = 'Camisa de algodón 100% para hombre'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Camisas'
+  VCH_PAIS_PRODUCCION = 'Peru'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul Marino'
+  VCH_SIZE = 'M'
+  VCH_SKU_VENDEDOR = 'SKU-CAM-001'
+  VCH_CODIGO_BARRAS = '7.50E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-001'
+  NUM_QUANTITY_FALABELLA = '50'
+  NUM_PRICE_FALABELLA = '89.9'
+  NUM_SALE_PRICE_FALABELLA = '79.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00:00'
+  FEC_SALE_END_DATE = '31/12/2025 00:00:00'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'Ninguno'
+  VCH_COMPOSITION = '100% Algodón'
+  VCH_MATERIAL_VESTUARIO = 'Algodón'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 camisa en bolsa'
+  NUM_ANCHO_PAQUETE = '30'
+  NUM_LARGO_PAQUETE = '40'
+  NUM_ALTO_PAQUETE = '5'
+  NUM_PESO_PAQUETE = '0.3'
+  VCH_IMAGEN_PRINCIPAL = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad.webp'
+  VCH_IMAGEN2 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/1.webp'
+  VCH_IMAGEN3 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad%20(3).webp'
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = ''
+  VCH_TIPO_PUBLI = 'PEN'
+  VCH_FORM_ENV = 'Premium'
+  VCH_COSTO_EN = 'Envío a domicilio'
+  VCH_RETIRO = 'Gratis'
+  VCH_PESO_PROD = 'Si'
+  VCH_LONG_PROD = '300'
+  VCH_ANCHO_PROD = '40'
+  VCH_ALTURA_PROD = '30'
+  VCH_TIPO_CUE = '5'
+  VCH_TIPO_PUN = 'Cuello clásico'
+  VCH_TIPO_CIER = 'Puño con botón'
+  VCH_TIPO_GARANT = 'Botones'
+  VCH_TABLA_TALLA = 'Contra defectos'
+  VCH_TAMANIO_PROD = 'M'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:59'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #2 ---
+ID: 118 | Nombre: 'ESTE SI ES POLERA' | Clase: 1
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '15'
+  NUM_ID_CLASE = '1'
+  VCH_NOMBRE = 'ESTE SI ES POLERA'
+  VCH_MARCA = 'GENERICO'
+  VCH_MODELO = 'SPORT-PRO'
+  VCH_DESCRIPCION = 'Polera deportiva transpirable'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Deportiva'
+  VCH_PAIS_PRODUCCION = 'China'
+  VCH_BASIC_COLOR = 'Negro'
+  VCH_COLOR = 'Negro'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-POL-002'
+  VCH_CODIGO_BARRAS = '7.51E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-002'
+  NUM_QUANTITY_FALABELLA = '30'
+  NUM_PRICE_FALABELLA = '129.9'
+  NUM_SALE_PRICE_FALABELLA = '99.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00:00'
+  FEC_SALE_END_DATE = '31/01/2026 00:00:00'
+  VCH_FIT = 'Slim'
+  VCH_COSTUME_GENRE = 'Unisex'
+  VCH_PANTS_TYPE = 'Ninguno'
+  VCH_COMPOSITION = 'Poliéster 100%'
+  VCH_MATERIAL_VESTUARIO = 'Poliéster'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '6 meses'
+  VCH_GARANTIA_VENDEDOR = '3 meses'
+  VCH_CONTENIDO_PAQUETE = '1 polera en empaque'
+  NUM_ANCHO_PAQUETE = '28'
+  NUM_LARGO_PAQUETE = '38'
+  NUM_ALTO_PAQUETE = '4'
+  NUM_PESO_PAQUETE = '0.25'
+  VCH_IMAGEN_PRINCIPAL = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad.webp'
+  VCH_IMAGEN2 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/1.webp'
+  VCH_IMAGEN3 = ''
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Estándar'
+  VCH_FORM_ENV = 'Envío express'
+  VCH_COSTO_EN = '10 soles'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '250'
+  VCH_LONG_PROD = '38'
+  VCH_ANCHO_PROD = '28'
+  VCH_ALTURA_PROD = '4'
+  VCH_TIPO_CUE = 'Cuello redondo'
+  VCH_TIPO_PUN = 'Sin puño'
+  VCH_TIPO_CIER = 'Sin cierre'
+  VCH_TIPO_GARANT = 'Contra defectos'
+  VCH_TABLA_TALLA = 'L'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:59'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #3 ---
+ID: 118 | Nombre: 'PANTALON JEAN CLASICO' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '10'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'PANTALON JEAN CLASICO'
+  VCH_MARCA = 'LEVIS'
+  VCH_MODELO = '501-ORIGINAL'
+  VCH_DESCRIPCION = 'Pantalón jean corte clásico'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa - Pantalones'
+  VCH_PAIS_PRODUCCION = 'Mexico'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul Denim'
+  VCH_SIZE = '32'
+  VCH_SKU_VENDEDOR = 'SKU-PAN-003'
+  VCH_CODIGO_BARRAS = '7.50E+12'
+  VCH_SKU_PADRE = 'SKU-PAD-003'
+  NUM_QUANTITY_FALABELLA = '25'
+  NUM_PRICE_FALABELLA = '199.9'
+  NUM_SALE_PRICE_FALABELLA = '179.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00:00'
+  FEC_SALE_END_DATE = '31/12/2025 00:00:00'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'Jean clásico'
+  VCH_COMPOSITION = '98% Algodón 2% Elastano'
+  VCH_MATERIAL_VESTUARIO = 'Denim'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 pantalón en bolsa'
+  NUM_ANCHO_PAQUETE = '35'
+  NUM_LARGO_PAQUETE = '45'
+  NUM_ALTO_PAQUETE = '6'
+  NUM_PESO_PAQUETE = '0.5'
+  VCH_IMAGEN_PRINCIPAL = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad.webp'
+  VCH_IMAGEN2 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/1.webp'
+  VCH_IMAGEN3 = 'https://rgallery.ripley.cl/rgallery/6054226/SKU000656/w=800%2Ch=800%2Cfit=pad%20(3).webp'
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Premium'
+  VCH_FORM_ENV = 'Envío estándar'
+  VCH_COSTO_EN = 'Gratis'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '500'
+  VCH_LONG_PROD = '45'
+  VCH_ANCHO_PROD = '35'
+  VCH_ALTURA_PROD = '6'
+  VCH_TIPO_CUE = 'Sin cuello'
+  VCH_TIPO_PUN = 'Sin puño'
+  VCH_TIPO_CIER = 'Cierre metálico'
+  VCH_TIPO_GARANT = 'Contra defectos'
+  VCH_TABLA_TALLA = '32'
+  VCH_TAMANIO_PROD = 'Talla32'
+  FEC_FECHA_CREACION = '2025-10-16 19:57:59'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+
+=== RESUMEN FINAL ===
+Insertados: 0
+Errores: 3
+Porcentaje éxito: 0%
+
+
+=== INSERCIÓN EN BD 2025-10-16 19:58:06 ===
+Total productos a insertar: 3
+
+--- Producto #1 ---
+ID: 118 | Nombre: 'CAMISA CASUAL' | Clase: 1
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '20'
+  NUM_ID_CLASE = '1'
+  VCH_NOMBRE = 'CAMISA CASUAL'
+  VCH_MARCA = 'GENERICO'
+  VCH_MODELO = 'CASUAL2024'
+  VCH_DESCRIPCION = 'Camisa casual de algodón'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa'
+  VCH_PAIS_PRODUCCION = 'Peru'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul'
+  VCH_SIZE = 'M'
+  VCH_SKU_VENDEDOR = 'SKU-001'
+  VCH_CODIGO_BARRAS = '7.50123E+12'
+  VCH_SKU_PADRE = 'PAD-001'
+  NUM_QUANTITY_FALABELLA = '50'
+  NUM_PRICE_FALABELLA = '89.9'
+  NUM_SALE_PRICE_FALABELLA = '79.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00'
+  FEC_SALE_END_DATE = '31/12/2025 23:59'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'N/A'
+  VCH_COMPOSITION = '100% Algodón'
+  VCH_MATERIAL_VESTUARIO = 'Algodón'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 unidad'
+  NUM_ANCHO_PAQUETE = '30'
+  NUM_LARGO_PAQUETE = '40'
+  NUM_ALTO_PAQUETE = '5'
+  NUM_PESO_PAQUETE = '0.3'
+  VCH_IMAGEN_PRINCIPAL = 'https://example.com/img1.jpg'
+  VCH_IMAGEN2 = 'https://example.com/img2.jpg'
+  VCH_IMAGEN3 = 'N/A'
+  VCH_IMAGEN4 = 'N/A'
+  VCH_IMAGEN5 = 'N/A'
+  VCH_IMAGEN6 = 'N/A'
+  VCH_IMAGEN7 = 'N/A'
+  VCH_IMAGEN8 = 'N/A'
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Premium'
+  VCH_FORM_ENV = 'Domicilio'
+  VCH_COSTO_EN = 'Gratis'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '300'
+  VCH_LONG_PROD = '40'
+  VCH_ANCHO_PROD = '30'
+  VCH_ALTURA_PROD = '5'
+  VCH_TIPO_CUE = 'Clasico'
+  VCH_TIPO_PUN = 'Boton'
+  VCH_TIPO_CIER = 'Botones'
+  VCH_TIPO_GARANT = 'Defectos'
+  VCH_TABLA_TALLA = 'M'
+  VCH_TAMANIO_PROD = 'Mediano'
+  FEC_FECHA_CREACION = '2025-10-16 19:58:06'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #2 ---
+ID: 118 | Nombre: 'CAMISS' | Clase: 1
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '22'
+  NUM_ID_CLASE = '1'
+  VCH_NOMBRE = 'CAMISS'
+  VCH_MARCA = 'GENERICO'
+  VCH_MODELO = 'CASUAL2024'
+  VCH_DESCRIPCION = 'Camisa casual de algodón'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa'
+  VCH_PAIS_PRODUCCION = 'Peru'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul'
+  VCH_SIZE = 'M'
+  VCH_SKU_VENDEDOR = 'SKU-001'
+  VCH_CODIGO_BARRAS = '7.50123E+12'
+  VCH_SKU_PADRE = 'PAD-001'
+  NUM_QUANTITY_FALABELLA = '50'
+  NUM_PRICE_FALABELLA = '89.9'
+  NUM_SALE_PRICE_FALABELLA = '79.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00'
+  FEC_SALE_END_DATE = '31/12/2025 23:59'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'N/A'
+  VCH_COMPOSITION = '100% Algodón'
+  VCH_MATERIAL_VESTUARIO = 'Algodón'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 unidad'
+  NUM_ANCHO_PAQUETE = '30'
+  NUM_LARGO_PAQUETE = '40'
+  NUM_ALTO_PAQUETE = '5'
+  NUM_PESO_PAQUETE = '0.3'
+  VCH_IMAGEN_PRINCIPAL = 'https://example.com/img1.jpg'
+  VCH_IMAGEN2 = 'https://example.com/img2.jpg'
+  VCH_IMAGEN3 = 'N/A'
+  VCH_IMAGEN4 = 'N/A'
+  VCH_IMAGEN5 = 'N/A'
+  VCH_IMAGEN6 = 'N/A'
+  VCH_IMAGEN7 = 'N/A'
+  VCH_IMAGEN8 = 'N/A'
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Premium'
+  VCH_FORM_ENV = 'Domicilio'
+  VCH_COSTO_EN = 'Gratis'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '300'
+  VCH_LONG_PROD = '40'
+  VCH_ANCHO_PROD = '30'
+  VCH_ALTURA_PROD = '5'
+  VCH_TIPO_CUE = 'Clasico'
+  VCH_TIPO_PUN = 'Boton'
+  VCH_TIPO_CIER = 'Botones'
+  VCH_TIPO_GARANT = 'Defectos'
+  VCH_TABLA_TALLA = 'M'
+  VCH_TAMANIO_PROD = 'Mediano'
+  FEC_FECHA_CREACION = '2025-10-16 19:58:06'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+--- Producto #3 ---
+ID: 118 | Nombre: 'CASUALLL' | Clase: 1
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '23'
+  NUM_ID_CLASE = '1'
+  VCH_NOMBRE = 'CASUALLL'
+  VCH_MARCA = 'GENERICO'
+  VCH_MODELO = 'CASUAL2024'
+  VCH_DESCRIPCION = 'Camisa casual de algodón'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa'
+  VCH_PAIS_PRODUCCION = 'Peru'
+  VCH_BASIC_COLOR = 'Azul'
+  VCH_COLOR = 'Azul'
+  VCH_SIZE = 'M'
+  VCH_SKU_VENDEDOR = 'SKU-001'
+  VCH_CODIGO_BARRAS = '7.50123E+12'
+  VCH_SKU_PADRE = 'PAD-001'
+  NUM_QUANTITY_FALABELLA = '50'
+  NUM_PRICE_FALABELLA = '89.9'
+  NUM_SALE_PRICE_FALABELLA = '79.9'
+  FEC_SALE_START_DATE = '20/10/2025 00:00'
+  FEC_SALE_END_DATE = '31/12/2025 23:59'
+  VCH_FIT = 'Regular'
+  VCH_COSTUME_GENRE = 'Masculino'
+  VCH_PANTS_TYPE = 'N/A'
+  VCH_COMPOSITION = '100% Algodón'
+  VCH_MATERIAL_VESTUARIO = 'Algodón'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 unidad'
+  NUM_ANCHO_PAQUETE = '30'
+  NUM_LARGO_PAQUETE = '40'
+  NUM_ALTO_PAQUETE = '5'
+  NUM_PESO_PAQUETE = '0.3'
+  VCH_IMAGEN_PRINCIPAL = 'https://example.com/img1.jpg'
+  VCH_IMAGEN2 = 'https://example.com/img2.jpg'
+  VCH_IMAGEN3 = 'N/A'
+  VCH_IMAGEN4 = 'N/A'
+  VCH_IMAGEN5 = 'N/A'
+  VCH_IMAGEN6 = 'N/A'
+  VCH_IMAGEN7 = 'N/A'
+  VCH_IMAGEN8 = 'N/A'
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Premium'
+  VCH_FORM_ENV = 'Domicilio'
+  VCH_COSTO_EN = 'Gratis'
+  VCH_RETIRO = 'Si'
+  VCH_PESO_PROD = '300'
+  VCH_LONG_PROD = '40'
+  VCH_ANCHO_PROD = '30'
+  VCH_ALTURA_PROD = '5'
+  VCH_TIPO_CUE = 'Clasico'
+  VCH_TIPO_PUN = 'Boton'
+  VCH_TIPO_CIER = 'Botones'
+  VCH_TIPO_GARANT = 'Defectos'
+  VCH_TABLA_TALLA = 'M'
+  VCH_TAMANIO_PROD = 'Mediano'
+  FEC_FECHA_CREACION = '2025-10-16 19:58:06'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[22007]: Invalid datetime format: 1292 Incorrect datetime value: '20/10/2025 00:00' for column 'FEC_SALE_START_DATE' at row 1
+SQL State: 22007
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+
+=== RESUMEN FINAL ===
+Insertados: 0
+Errores: 3
+Porcentaje éxito: 0%
+
+
+=== INSERCIÓN EN BD 2025-10-16 20:05:34 ===
+Total productos a insertar: 1
+
+--- Producto #1 ---
+ID: 118 | Nombre: 'Pantalón Deportivo Gris' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '5'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'Pantalón Deportivo Gris'
+  VCH_MARCA = 'Puma'
+  VCH_MODELO = 'PM-SD-2024'
+  VCH_DESCRIPCION = 'Pantalón deportivo ajustado'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa Deportiva'
+  VCH_PAIS_PRODUCCION = 'Perú'
+  VCH_BASIC_COLOR = 'Gris'
+  VCH_COLOR = 'Gris Oscuro'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-PUMA-003'
+  VCH_CODIGO_BARRAS = '7503456789012'
+  VCH_SKU_PADRE = 'PADRE-PUMA-001'
+  NUM_QUANTITY_FALABELLA = '10'
+  NUM_PRICE_FALABELLA = '129.90'
+  NUM_SALE_PRICE_FALABELLA = '0.00'
+  FEC_SALE_START_DATE = 'NULL'
+  FEC_SALE_END_DATE = 'NULL'
+  VCH_FIT = 'Slim Fit'
+  VCH_COSTUME_GENRE = 'Hombre'
+  VCH_PANTS_TYPE = 'Slim Fit'
+  VCH_COMPOSITION = '85% Poliéster 15% Elastano'
+  VCH_MATERIAL_VESTUARIO = 'Poliéster'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 pantalón'
+  NUM_ANCHO_PAQUETE = '35.00'
+  NUM_LARGO_PAQUETE = '45.00'
+  NUM_ALTO_PAQUETE = '8.00'
+  NUM_PESO_PAQUETE = '0.35'
+  VCH_IMAGEN_PRINCIPAL = 'https://ejemplo.com/pantalon1.jpg'
+  VCH_IMAGEN2 = 'https://ejemplo.com/pantalon2.jpg'
+  VCH_IMAGEN3 = ''
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Estándar'
+  VCH_FORM_ENV = 'Envío Estándar'
+  VCH_COSTO_EN = 'Vendedor'
+  VCH_RETIRO = 'No'
+  VCH_PESO_PROD = '0.35'
+  VCH_LONG_PROD = '45.00'
+  VCH_ANCHO_PROD = '35.00'
+  VCH_ALTURA_PROD = '8.00'
+  VCH_TIPO_CUE = ''
+  VCH_TIPO_PUN = 'Elástica'
+  VCH_TIPO_CIER = 'Cierre metálico'
+  VCH_TIPO_GARANT = '1 año'
+  VCH_TABLA_TALLA = 'Talla L'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 20:05:34'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'FEC_SALE_START_DATE' cannot be null
+SQL State: 23000
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+
+=== RESUMEN FINAL ===
+Insertados: 0
+Errores: 1
+Porcentaje éxito: 0%
+
+
+=== INSERCIÓN EN BD 2025-10-16 20:06:31 ===
+Total productos a insertar: 1
+
+--- Producto #1 ---
+ID: 118 | Nombre: 'Pantalón Deportivo Gris' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '5'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'Pantalón Deportivo Gris'
+  VCH_MARCA = 'Puma'
+  VCH_MODELO = 'PM-SD-2024'
+  VCH_DESCRIPCION = 'Pantalón deportivo ajustado'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa Deportiva'
+  VCH_PAIS_PRODUCCION = 'Perú'
+  VCH_BASIC_COLOR = 'Gris'
+  VCH_COLOR = 'Gris Oscuro'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-PUMA-003'
+  VCH_CODIGO_BARRAS = '7503456789012'
+  VCH_SKU_PADRE = 'PADRE-PUMA-001'
+  NUM_QUANTITY_FALABELLA = '10'
+  NUM_PRICE_FALABELLA = '129.90'
+  NUM_SALE_PRICE_FALABELLA = '0.00'
+  FEC_SALE_START_DATE = 'NULL'
+  FEC_SALE_END_DATE = 'NULL'
+  VCH_FIT = 'Slim Fit'
+  VCH_COSTUME_GENRE = 'Hombre'
+  VCH_PANTS_TYPE = 'Slim Fit'
+  VCH_COMPOSITION = '85% Poliéster 15% Elastano'
+  VCH_MATERIAL_VESTUARIO = 'Poliéster'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 pantalón'
+  NUM_ANCHO_PAQUETE = '35.00'
+  NUM_LARGO_PAQUETE = '45.00'
+  NUM_ALTO_PAQUETE = '8.00'
+  NUM_PESO_PAQUETE = '0.35'
+  VCH_IMAGEN_PRINCIPAL = 'https://ejemplo.com/pantalon1.jpg'
+  VCH_IMAGEN2 = 'https://ejemplo.com/pantalon2.jpg'
+  VCH_IMAGEN3 = ''
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Estándar'
+  VCH_FORM_ENV = 'Envío Estándar'
+  VCH_COSTO_EN = 'Vendedor'
+  VCH_RETIRO = 'No'
+  VCH_PESO_PROD = '0.35'
+  VCH_LONG_PROD = '45.00'
+  VCH_ANCHO_PROD = '35.00'
+  VCH_ALTURA_PROD = '8.00'
+  VCH_TIPO_CUE = ''
+  VCH_TIPO_PUN = 'Elástica'
+  VCH_TIPO_CIER = 'Cierre metálico'
+  VCH_TIPO_GARANT = '1 año'
+  VCH_TABLA_TALLA = 'Talla L'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 20:06:31'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+❌ EXCEPCIÓN PDO: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'FEC_SALE_START_DATE' cannot be null
+SQL State: 23000
+Stack trace:
+#0 C:\xampp\htdocs\CRUD22\app\models\mainModel.php(91): PDOStatement->execute()
+#1 C:\xampp\htdocs\CRUD22\app\models\productoModel.php(253): app\models\mainModel->guardarDatos('producto', Array)
+#2 C:\xampp\htdocs\CRUD22\app\controllers\productoController.php(404): app\models\productoModel->insertarProductosCSVModelo(Array)
+#3 C:\xampp\htdocs\CRUD22\app\ajax\productoAjax.php(49): app\controllers\productoController->importarCSVControlador()
+#4 {main}
+
+
+=== RESUMEN FINAL ===
+Insertados: 0
+Errores: 1
+Porcentaje éxito: 0%
+
+
+=== INSERCIÓN EN BD 2025-10-16 20:10:58 ===
+Total productos a insertar: 1
+
+--- Producto #1 ---
+ID: 118 | Nombre: 'Pantalón Deportivo' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '118'
+  NUM_STOCK = '5'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'Pantalón Deportivo'
+  VCH_MARCA = 'Puma'
+  VCH_MODELO = 'PM-2024'
+  VCH_DESCRIPCION = 'Pantalón deportivo'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa'
+  VCH_PAIS_PRODUCCION = 'Perú'
+  VCH_BASIC_COLOR = 'Gris'
+  VCH_COLOR = 'Gris Oscuro'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-003'
+  VCH_CODIGO_BARRAS = '7503456789012'
+  VCH_SKU_PADRE = 'PAD-003'
+  NUM_QUANTITY_FALABELLA = '10'
+  NUM_PRICE_FALABELLA = '129.90'
+  NUM_SALE_PRICE_FALABELLA = '0.00'
+  FEC_SALE_START_DATE = '2025-10-16 20:10:58'
+  FEC_SALE_END_DATE = '2026-01-14 20:10:58'
+  VCH_FIT = 'Slim Fit'
+  VCH_COSTUME_GENRE = 'Hombre'
+  VCH_PANTS_TYPE = 'Slim'
+  VCH_COMPOSITION = '85% Poliéster'
+  VCH_MATERIAL_VESTUARIO = 'Poliéster'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 pantalón'
+  NUM_ANCHO_PAQUETE = '35.00'
+  NUM_LARGO_PAQUETE = '45.00'
+  NUM_ALTO_PAQUETE = '8.00'
+  NUM_PESO_PAQUETE = '0.35'
+  VCH_IMAGEN_PRINCIPAL = 'https://ejemplo.com/pan1.jpg'
+  VCH_IMAGEN2 = 'https://ejemplo.com/pan2.jpg'
+  VCH_IMAGEN3 = ''
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Estándar'
+  VCH_FORM_ENV = 'Estándar'
+  VCH_COSTO_EN = 'Vendedor'
+  VCH_RETIRO = 'No'
+  VCH_PESO_PROD = '0.35'
+  VCH_LONG_PROD = '45.00'
+  VCH_ANCHO_PROD = '35.00'
+  VCH_ALTURA_PROD = '8.00'
+  VCH_TIPO_CUE = ''
+  VCH_TIPO_PUN = 'Elástica'
+  VCH_TIPO_CIER = 'Cierre'
+  VCH_TIPO_GARANT = '1 año'
+  VCH_TABLA_TALLA = 'Talla L'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 20:10:58'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+✅ INSERTADO CORRECTAMENTE (rowCount: 1)
+
+
+=== RESUMEN FINAL ===
+Insertados: 1
+Errores: 0
+Porcentaje éxito: 100%
+
+
+=== INSERCIÓN EN BD 2025-10-16 20:29:53 ===
+Total productos a insertar: 1
+
+--- Producto #1 ---
+ID: 119 | Nombre: 'Pantalón Deportivo' | Clase: 2
+Validación - Clase: OK | Nombre: OK | Precio: OK
+Campos a insertar:
+  NUM_ID_PRODUCTO = '119'
+  NUM_STOCK = '5'
+  NUM_ID_CLASE = '2'
+  VCH_NOMBRE = 'Pantalón Deportivo'
+  VCH_MARCA = 'Puma'
+  VCH_MODELO = 'PM-2024'
+  VCH_DESCRIPCION = 'Pantalón deportivo'
+  VCH_CATEGORIA_PRIMARIA = 'Ropa'
+  VCH_PAIS_PRODUCCION = 'Perú'
+  VCH_BASIC_COLOR = 'Gris'
+  VCH_COLOR = 'Gris Oscuro'
+  VCH_SIZE = 'L'
+  VCH_SKU_VENDEDOR = 'SKU-003'
+  VCH_CODIGO_BARRAS = '7503456789012'
+  VCH_SKU_PADRE = 'PAD-003'
+  NUM_QUANTITY_FALABELLA = '10'
+  NUM_PRICE_FALABELLA = '129.90'
+  NUM_SALE_PRICE_FALABELLA = '0.00'
+  FEC_SALE_START_DATE = '2025-10-16 20:29:53'
+  FEC_SALE_END_DATE = '2026-01-14 20:29:53'
+  VCH_FIT = 'Slim Fit'
+  VCH_COSTUME_GENRE = 'Hombre'
+  VCH_PANTS_TYPE = 'Slim'
+  VCH_COMPOSITION = '85% Poliéster'
+  VCH_MATERIAL_VESTUARIO = 'Poliéster'
+  VCH_CONDICION_PRODUCTO = 'Nuevo'
+  VCH_GARANTIA_PRODUCTO = '12 meses'
+  VCH_GARANTIA_VENDEDOR = '6 meses'
+  VCH_CONTENIDO_PAQUETE = '1 pantalón'
+  NUM_ANCHO_PAQUETE = '35.00'
+  NUM_LARGO_PAQUETE = '45.00'
+  NUM_ALTO_PAQUETE = '8.00'
+  NUM_PESO_PAQUETE = '0.35'
+  VCH_IMAGEN_PRINCIPAL = 'https://ejemplo.com/pan1.jpg'
+  VCH_IMAGEN2 = 'https://ejemplo.com/pan2.jpg'
+  VCH_IMAGEN3 = ''
+  VCH_IMAGEN4 = ''
+  VCH_IMAGEN5 = ''
+  VCH_IMAGEN6 = ''
+  VCH_IMAGEN7 = ''
+  VCH_IMAGEN8 = ''
+  VCH_MONEDA = 'PEN'
+  VCH_TIPO_PUBLI = 'Estándar'
+  VCH_FORM_ENV = 'Estándar'
+  VCH_COSTO_EN = 'Vendedor'
+  VCH_RETIRO = 'No'
+  VCH_PESO_PROD = '0.35'
+  VCH_LONG_PROD = '45.00'
+  VCH_ANCHO_PROD = '35.00'
+  VCH_ALTURA_PROD = '8.00'
+  VCH_TIPO_CUE = ''
+  VCH_TIPO_PUN = 'Elástica'
+  VCH_TIPO_CIER = 'Cierre'
+  VCH_TIPO_GARANT = '1 año'
+  VCH_TABLA_TALLA = 'Talla L'
+  VCH_TAMANIO_PROD = 'Grande'
+  FEC_FECHA_CREACION = '2025-10-16 20:29:53'
+  VCH_USER_CREACION = 'SYSTEM'
+Ejecutando guardarDatos()...
+✅ INSERTADO CORRECTAMENTE (rowCount: 1)
+
+
+=== RESUMEN FINAL ===
+Insertados: 1
+Errores: 0
+Porcentaje éxito: 100%
+

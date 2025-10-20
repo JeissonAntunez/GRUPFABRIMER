@@ -1,0 +1,266 @@
+.content-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 2rem;
+        border-radius: 10px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .content-header h1 {
+        color: white;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    .content-header h2 {
+        color: rgba(255,255,255,0.9);
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    .card-tabla {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        padding: 1.5rem;
+    }
+
+    .btn-nueva-lista {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .btn-nueva-lista:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        color: white;
+    }
+
+    .tabla-custom {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .tabla-custom thead {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .tabla-custom thead th {
+        color: white !important;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+        padding: 1rem !important;
+        border: none !important;
+    }
+
+    .tabla-custom tbody tr {
+        transition: all 0.3s ease;
+    }
+
+    .tabla-custom tbody tr:hover {
+        background-color: #f8f9ff;
+        transform: scale(1.01);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .tabla-custom tbody td {
+        padding: 1rem !important;
+        vertical-align: middle !important;
+        border: 1px solid #f0f0f0 !important;
+    }
+
+    .badge-estado {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .badge-activo {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        color: white;
+    }
+
+    .badge-activo:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(17, 153, 142, 0.4);
+    }
+
+    .badge-inactivo {
+        background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+        color: white;
+    }
+
+    .badge-inactivo:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(238, 9, 121, 0.4);
+    }
+
+    .btn-accion {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 0.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-editar {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+    }
+
+    .btn-editar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(79, 172, 254, 0.4);
+    }
+
+    .btn-eliminar {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+    }
+
+    .btn-eliminar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(245, 87, 108, 0.4);
+    }
+
+    .modal-card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+
+    .modal-card-head {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 1.5rem;
+    }
+
+    .modal-card-title {
+        color: white;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+
+    .modal-card-head .delete {
+        background: rgba(255,255,255,0.2);
+    }
+
+    .modal-card-head .delete:hover {
+        background: rgba(255,255,255,0.3);
+    }
+
+    .modal-card-body {
+        padding: 2rem;
+    }
+
+    .field label {
+        font-weight: 600;
+        color: #4a5568;
+        margin-bottom: 0.5rem;
+    }
+
+    .input, .textarea, .select select {
+        border-radius: 8px;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+
+    .input:focus, .textarea:focus, .select select:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-guardar {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        border: none;
+        color: white;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-guardar:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(17, 153, 142, 0.4);
+        color: white;
+    }
+
+    .btn-cancelar {
+        background: #e2e8f0;
+        border: none;
+        color: #4a5568;
+        padding: 0.75rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-cancelar:hover {
+        background: #cbd5e0;
+    }
+
+    .no-registros {
+        padding: 3rem;
+        text-align: center;
+        color: #a0aec0;
+    }
+
+    .no-registros i {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .card-tabla {
+        animation: fadeIn 0.5s ease;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+        .tabla-custom {
+            font-size: 0.85rem;
+        }
+
+        .btn-accion {
+            width: 32px;
+            height: 32px;
+            font-size: 0.85rem;
+        }
+
+        .badge-estado {
+            font-size: 0.75rem;
+            padding: 0.4rem 0.8rem;
+        }
+    }

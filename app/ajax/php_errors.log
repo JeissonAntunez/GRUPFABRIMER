@@ -1,0 +1,30 @@
+[17-Oct-2025 20:48:38 America/Lima] 🔍 Solicitud plantilla - Clase: 1 | Tienda: 1
+[17-Oct-2025 20:48:38 America/Lima] 📋 Headers válidos: 34
+[17-Oct-2025 20:48:38 America/Lima] ❌ Columnas descartadas (NULL): 0
+[17-Oct-2025 20:48:38 America/Lima] 📋 Primeros 5 campos: VCH_NOMBRE, VCH_MARCA, VCH_MODELO, VCH_DESCRIPCION, VCH_CATEGORIA_PRIMARIA
+[17-Oct-2025 20:48:38 America/Lima] 🔄 Consultando productos para clase 1...
+[17-Oct-2025 20:48:39 America/Lima] ✅ Productos procesados: 100
+[17-Oct-2025 20:48:39 America/Lima] 📦 Filas en array datos: 100
+[17-Oct-2025 20:48:39 America/Lima] 🔍 Primera fila (primeros 3 valores): ["CAMISA NI\u00d1O ALGODON LE\u00d1ADOR BEIGE","GEN","CAMISA LE\u00d1ADOR"]
+[17-Oct-2025 20:48:42 America/Lima] 🔍 Solicitud plantilla - Clase: 1 | Tienda: 1
+[17-Oct-2025 20:48:43 America/Lima] 📋 Headers válidos: 34
+[17-Oct-2025 20:48:43 America/Lima] ❌ Columnas descartadas (NULL): 0
+[17-Oct-2025 20:48:43 America/Lima] 📋 Primeros 5 campos: VCH_NOMBRE, VCH_MARCA, VCH_MODELO, VCH_DESCRIPCION, VCH_CATEGORIA_PRIMARIA
+[17-Oct-2025 20:48:43 America/Lima] 🔄 Consultando productos para clase 1...
+[17-Oct-2025 20:48:43 America/Lima] ✅ Productos procesados: 100
+[17-Oct-2025 20:48:43 America/Lima] 📦 Filas en array datos: 100
+[17-Oct-2025 20:48:43 America/Lima] 🔍 Primera fila (primeros 3 valores): ["CAMISA NI\u00d1O ALGODON LE\u00d1ADOR BEIGE","GEN","CAMISA LE\u00d1ADOR"]
+[17-Oct-2025 20:52:27 America/Lima] 🔍 Solicitud plantilla - Clase: 1 | Tienda: 1
+[17-Oct-2025 20:52:28 America/Lima] 📋 Headers válidos: 34
+[17-Oct-2025 20:52:28 America/Lima] ❌ Columnas descartadas (NULL): 0
+[17-Oct-2025 20:52:28 America/Lima] 📋 Primeros 5 campos: VCH_NOMBRE, VCH_MARCA, VCH_MODELO, VCH_DESCRIPCION, VCH_CATEGORIA_PRIMARIA
+[17-Oct-2025 20:52:28 America/Lima] 🔄 Consultando productos para clase 1...
+[17-Oct-2025 20:52:28 America/Lima] ✅ Productos procesados: 100
+[17-Oct-2025 20:52:28 America/Lima] 📦 Filas en array datos: 100
+[17-Oct-2025 20:52:28 America/Lima] 🔍 Primera fila (primeros 3 valores): ["CAMISA NI\u00d1O ALGODON LE\u00d1ADOR BEIGE","GEN","CAMISA LE\u00d1ADOR"]
+[17-Oct-2025 21:17:49 America/Lima] Error en obtenerProductosConPlantillaModelo: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Producción, p.Color Básico, p.Color, p.Talla, p.SKU Vendedor, p.SKU Padre, p.S' at line 1
+[17-Oct-2025 21:17:49 America/Lima] SQL generado: SELECT p.Nombre, p.Marca, p.Modelo, p.Descripción, p.Categoría Primaria, p.País de Producción, p.Color Básico, p.Color, p.Talla, p.SKU Vendedor, p.SKU Padre, p.Stock, p.Precio, p.Precio Oferta, p.Fecha Inicio Oferta, p.Fecha Fin Oferta, p.Fit, p.Género, p.Largo de Mangas, p.Composición, p.Material, p.Contenido Paquete, p.Ancho Paquete, p.Largo Paquete, p.Alto Paquete, p.Peso Paquete, p.Imagen Principal, p.Imagen Principal, p.Imagen Principal, p.Imagen Principal, p.Imagen Principal, p.Imagen Principal, p.Imagen Principal, p.Imagen Principal, c.VCH_NOMBRE AS NOMBRE_CLASE
+            FROM producto p
+            LEFT JOIN clase c ON p.NUM_ID_CLASE = c.NUM_ID_CLASE
+            WHERE p.NUM_ID_CLASE = :IdClase AND p.NUM_ID_TIENDA = :IdTienda ORDER BY p.NUM_ID_PRODUCTO ASC
+             LIMIT 100
