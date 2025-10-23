@@ -155,12 +155,27 @@ class productoController extends mainController
     }
 
     /*---------- Listar Productos ----------*/
+    // public function listarProductosControlador($idClase = 0, $idTienda = 0, $busqueda = '')
+    // {
+    //     if ($idClase == 0 && $idTienda == 0 && empty($busqueda)) {
+    //         return $this->productoModel->listarTodosProductosModelo();
+    //     } else {
+    //         return $this->productoModel->listarProductosFiltrosModelo($idClase, $idTienda, $busqueda);
+    //     }
+    // }
+
+    /*---------- Listar Productos ----------*/
     public function listarProductosControlador($idClase = 0, $idTienda = 0, $busqueda = '')
     {
-        if ($idClase == 0 && $idTienda == 0 && empty($busqueda)) {
+        // NOTA: $idTienda se recibe pero NO se usa para filtrar productos
+        // Solo se usa para determinar qué plantilla mostrar en el frontend
+
+        if ($idClase == 0 && empty($busqueda)) {
+            // Sin filtros: listar todos
             return $this->productoModel->listarTodosProductosModelo();
         } else {
-            return $this->productoModel->listarProductosFiltrosModelo($idClase, $idTienda, $busqueda);
+            // Con filtros: filtrar solo por clase y búsqueda (producto NO tiene tienda)
+            return $this->productoModel->listarProductosFiltrosModelo($idClase, $busqueda);
         }
     }
 
@@ -648,237 +663,236 @@ class productoController extends mainController
     // }
 
     /*---------- ⭐ CORREGIDO: Obtener Plantilla Excel con Datos Filtrados ----------*/
-public function obtenerPlantillaExcelControlador()
-{
-    try {
-        $idClase = isset($_GET['id_clase']) ? intval($_GET['id_clase']) : (isset($_POST['id_clase']) ? intval($_POST['id_clase']) : 0);
-        $idTienda = isset($_GET['id_tienda']) ? intval($_GET['id_tienda']) : (isset($_POST['id_tienda']) ? intval($_POST['id_tienda']) : 0);
+    public function obtenerPlantillaExcelControlador()
+    {
+        try {
+            $idClase = isset($_GET['id_clase']) ? intval($_GET['id_clase']) : (isset($_POST['id_clase']) ? intval($_POST['id_clase']) : 0);
+            $idTienda = isset($_GET['id_tienda']) ? intval($_GET['id_tienda']) : (isset($_POST['id_tienda']) ? intval($_POST['id_tienda']) : 0);
 
-        error_log("🔍 Filtros recibidos - Clase: $idClase, Tienda: $idTienda");
+            error_log("🔍 Filtros recibidos - Clase: $idClase, Tienda: $idTienda");
 
-        if ($idClase == 0) {
-            die("Error: Debe seleccionar una Clase");
-        }
-
-        // ⭐ PASO 1: Obtener el NUM_ID_PLANTILLA específico según Clase + Tienda
-        $idPlantilla = $this->productoModel->obtenerIdPlantillaModelo($idClase, $idTienda);
-        
-        if (!$idPlantilla) {
-            die("Error: No existe plantilla configurada para Clase: $idClase" . ($idTienda > 0 ? ", Tienda: $idTienda" : ""));
-        }
-
-        error_log("✅ Plantilla encontrada: ID = $idPlantilla");
-
-        // ⭐ PASO 2: Obtener columnas dinámicas desde plant_detalle ORDENADAS por NUM_ORDEN
-        $columnasResult = $this->productoModel->obtenerColumnasPorPlantillaModelo($idPlantilla);
-
-        $headers = [];
-        $camposBD = [];
-
-        while ($col = $columnasResult->fetch()) {
-            $etiqueta = $col['CAMPO_ETIQUETA']; // VCH_CAMPO (para mostrar en Excel)
-            $nombreColumnaProducto = trim($col['CAMPO_BD']); // VCH_NOMBRE_PLANTILLA (nombre real de columna en producto)
-
-            if (!empty($nombreColumnaProducto)) {
-                $headers[] = [
-                    'nombre' => $etiqueta,
-                    'obligatorio' => ($col['OBLIGATORIO'] == 1)
-                ];
-                $camposBD[] = $nombreColumnaProducto;
+            if ($idClase == 0) {
+                die("Error: Debe seleccionar una Clase");
             }
-        }
 
-        if (empty($headers) || empty($camposBD)) {
-            die("Error: No se encontraron columnas configuradas en la plantilla ID: $idPlantilla");
-        }
+            // ⭐ PASO 1: Obtener el NUM_ID_PLANTILLA específico según Clase + Tienda
+            $idPlantilla = $this->productoModel->obtenerIdPlantillaModelo($idClase, $idTienda);
 
-        error_log("📋 Columnas a consultar (" . count($camposBD) . "): " . implode(", ", $camposBD));
+            if (!$idPlantilla) {
+                die("Error: No existe plantilla configurada para Clase: $idClase" . ($idTienda > 0 ? ", Tienda: $idTienda" : ""));
+            }
 
-        // ⭐ PASO 3: Construir SELECT dinámico
-        $columnasStr = 'p.' . implode(', p.', $camposBD);
-        
-        $sql = "SELECT $columnasStr 
+            error_log("✅ Plantilla encontrada: ID = $idPlantilla");
+
+            // ⭐ PASO 2: Obtener columnas dinámicas desde plant_detalle ORDENADAS por NUM_ORDEN
+            $columnasResult = $this->productoModel->obtenerColumnasPorPlantillaModelo($idPlantilla);
+
+            $headers = [];
+            $camposBD = [];
+
+            while ($col = $columnasResult->fetch()) {
+                $etiqueta = $col['CAMPO_ETIQUETA']; // VCH_CAMPO (para mostrar en Excel)
+                $nombreColumnaProducto = trim($col['CAMPO_BD']); // VCH_NOMBRE_PLANTILLA (nombre real de columna en producto)
+
+                if (!empty($nombreColumnaProducto)) {
+                    $headers[] = [
+                        'nombre' => $etiqueta,
+                        'obligatorio' => ($col['OBLIGATORIO'] == 1)
+                    ];
+                    $camposBD[] = $nombreColumnaProducto;
+                }
+            }
+
+            if (empty($headers) || empty($camposBD)) {
+                die("Error: No se encontraron columnas configuradas en la plantilla ID: $idPlantilla");
+            }
+
+            error_log("📋 Columnas a consultar (" . count($camposBD) . "): " . implode(", ", $camposBD));
+
+            // ⭐ PASO 3: Construir SELECT dinámico
+            $columnasStr = 'p.' . implode(', p.', $camposBD);
+
+            $sql = "SELECT $columnasStr 
                 FROM producto p
                 WHERE p.NUM_ID_CLASE = :IdClase";
-        
-        // No filtrar por tienda en productos, solo usar clase
-        $sql .= " ORDER BY p.NUM_ID_PRODUCTO";
 
-        error_log("🔍 SQL generado: " . $sql);
+            // No filtrar por tienda en productos, solo usar clase
+            $sql .= " ORDER BY p.NUM_ID_PRODUCTO";
 
-        // ⭐ PASO 4: Ejecutar consulta
-        $stmt = $this->productoModel->conectar()->prepare($sql);
-        $stmt->bindParam(":IdClase", $idClase, \PDO::PARAM_INT);
-        $stmt->execute();
+            error_log("🔍 SQL generado: " . $sql);
 
-        $totalProductos = $stmt->rowCount();
-        error_log("📦 Productos encontrados: $totalProductos");
+            // ⭐ PASO 4: Ejecutar consulta
+            $stmt = $this->productoModel->conectar()->prepare($sql);
+            $stmt->bindParam(":IdClase", $idClase, \PDO::PARAM_INT);
+            $stmt->execute();
 
-        if ($totalProductos == 0) {
-            error_log("⚠️ No hay productos para Clase: $idClase");
-            // Continuar para generar plantilla vacía
-        }
+            $totalProductos = $stmt->rowCount();
+            error_log("📦 Productos encontrados: $totalProductos");
 
-        // ⭐ PASO 5: Crear archivo Excel
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        
-        // Obtener nombre de clase
-        $nombreClase = "Clase_" . $idClase;
-        $nombreTienda = "";
-        
-        try {
-            $sqlClase = "SELECT VCH_NOMBRE FROM clase WHERE NUM_ID_CLASE = :ID LIMIT 1";
-            $stmtClase = $this->productoModel->conectar()->prepare($sqlClase);
-            $stmtClase->bindParam(":ID", $idClase, \PDO::PARAM_INT);
-            $stmtClase->execute();
-            
-            if ($stmtClase->rowCount() > 0) {
-                $clase = $stmtClase->fetch();
-                $nombreClase = $clase['VCH_NOMBRE'];
+            if ($totalProductos == 0) {
+                error_log("⚠️ No hay productos para Clase: $idClase");
+                // Continuar para generar plantilla vacía
             }
-        } catch (\Exception $e) {
-            error_log("Error al obtener nombre de clase: " . $e->getMessage());
-        }
 
-        // Obtener nombre de tienda si aplica
-        if ($idTienda > 0) {
+            // ⭐ PASO 5: Crear archivo Excel
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+
+            // Obtener nombre de clase
+            $nombreClase = "Clase_" . $idClase;
+            $nombreTienda = "";
+
             try {
-                $sqlTienda = "SELECT VCH_TIENDA FROM tienda WHERE NUM_ID_TIENDA = :ID LIMIT 1";
-                $stmtTienda = $this->productoModel->conectar()->prepare($sqlTienda);
-                $stmtTienda->bindParam(":ID", $idTienda, \PDO::PARAM_INT);
-                $stmtTienda->execute();
-                
-                if ($stmtTienda->rowCount() > 0) {
-                    $tienda = $stmtTienda->fetch();
-                    $nombreTienda = " - " . $tienda['VCH_TIENDA'];
+                $sqlClase = "SELECT VCH_NOMBRE FROM clase WHERE NUM_ID_CLASE = :ID LIMIT 1";
+                $stmtClase = $this->productoModel->conectar()->prepare($sqlClase);
+                $stmtClase->bindParam(":ID", $idClase, \PDO::PARAM_INT);
+                $stmtClase->execute();
+
+                if ($stmtClase->rowCount() > 0) {
+                    $clase = $stmtClase->fetch();
+                    $nombreClase = $clase['VCH_NOMBRE'];
                 }
             } catch (\Exception $e) {
-                error_log("Error al obtener nombre de tienda: " . $e->getMessage());
+                error_log("Error al obtener nombre de clase: " . $e->getMessage());
             }
-        }
 
-        $tituloHoja = $nombreClase . $nombreTienda;
-        $sheet->setTitle(substr($tituloHoja, 0, 31)); // Excel limita a 31 caracteres
+            // Obtener nombre de tienda si aplica
+            if ($idTienda > 0) {
+                try {
+                    $sqlTienda = "SELECT VCH_TIENDA FROM tienda WHERE NUM_ID_TIENDA = :ID LIMIT 1";
+                    $stmtTienda = $this->productoModel->conectar()->prepare($sqlTienda);
+                    $stmtTienda->bindParam(":ID", $idTienda, \PDO::PARAM_INT);
+                    $stmtTienda->execute();
 
-        // ⭐ PASO 6: Escribir encabezados (usar VCH_CAMPO como etiquetas)
-        $col = 1;
-        foreach ($headers as $header) {
-            $cellCoord = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . '1';
-            $nombreHeader = $header['nombre'] . ($header['obligatorio'] ? ' *' : '');
-            $sheet->setCellValue($cellCoord, $nombreHeader);
-
-            // Estilo del encabezado
-            $sheet->getStyle($cellCoord)->applyFromArray([
-                'font' => [
-                    'bold' => true,
-                    'color' => ['rgb' => 'FFFFFF'],
-                    'size' => 11
-                ],
-                'fill' => [
-                    'fillType' => Fill::FILL_SOLID,
-                    'startColor' => ['rgb' => $header['obligatorio'] ? 'E74C3C' : '3498DB']
-                ],
-                'alignment' => [
-                    'horizontal' => Alignment::HORIZONTAL_CENTER,
-                    'vertical' => Alignment::VERTICAL_CENTER
-                ],
-                'borders' => [
-                    'allBorders' => [
-                        'borderStyle' => Border::BORDER_THIN,
-                        'color' => ['rgb' => '000000']
-                    ]
-                ]
-            ]);
-
-            $sheet->getColumnDimension(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col))
-                ->setWidth(20);
-
-            $col++;
-        }
-
-        $sheet->getRowDimension(1)->setRowHeight(25);
-
-        // ⭐ PASO 7: Escribir datos de productos
-        $fila = 2;
-        while ($producto = $stmt->fetch()) {
-            $col = 1;
-
-            foreach ($camposBD as $campo) {
-                $valor = $producto[$campo] ?? '';
-
-                // Formatear valores especiales
-                if (strpos($campo, 'FEC_') === 0 && !empty($valor) && $valor != '1900-01-01 00:00:00') {
-                    try {
-                        $fecha = new \DateTime($valor);
-                        $valor = $fecha->format('d/m/Y H:i:s');
-                    } catch (\Exception $e) {
-                        $valor = '';
+                    if ($stmtTienda->rowCount() > 0) {
+                        $tienda = $stmtTienda->fetch();
+                        $nombreTienda = " - " . $tienda['VCH_TIENDA'];
                     }
-                } elseif (strpos($campo, 'NUM_PRICE') !== false || strpos($campo, 'NUM_SALE') !== false) {
-                    $valor = $valor > 0 ? floatval($valor) : 0;
-                } elseif (is_numeric($valor) && strpos($campo, 'NUM_') === 0) {
-                    $valor = floatval($valor);
+                } catch (\Exception $e) {
+                    error_log("Error al obtener nombre de tienda: " . $e->getMessage());
                 }
+            }
 
-                $cellCoord = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . $fila;
-                $sheet->setCellValue($cellCoord, $valor);
+            $tituloHoja = $nombreClase . $nombreTienda;
+            $sheet->setTitle(substr($tituloHoja, 0, 31)); // Excel limita a 31 caracteres
 
-                // Bordes para las celdas de datos
+            // ⭐ PASO 6: Escribir encabezados (usar VCH_CAMPO como etiquetas)
+            $col = 1;
+            foreach ($headers as $header) {
+                $cellCoord = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . '1';
+                $nombreHeader = $header['nombre'] . ($header['obligatorio'] ? ' *' : '');
+                $sheet->setCellValue($cellCoord, $nombreHeader);
+
+                // Estilo del encabezado
                 $sheet->getStyle($cellCoord)->applyFromArray([
+                    'font' => [
+                        'bold' => true,
+                        'color' => ['rgb' => 'FFFFFF'],
+                        'size' => 11
+                    ],
+                    'fill' => [
+                        'fillType' => Fill::FILL_SOLID,
+                        'startColor' => ['rgb' => $header['obligatorio'] ? 'E74C3C' : '3498DB']
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                        'vertical' => Alignment::VERTICAL_CENTER
+                    ],
                     'borders' => [
                         'allBorders' => [
                             'borderStyle' => Border::BORDER_THIN,
-                            'color' => ['rgb' => 'CCCCCC']
+                            'color' => ['rgb' => '000000']
                         ]
                     ]
                 ]);
 
+                $sheet->getColumnDimension(\PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col))
+                    ->setWidth(20);
+
                 $col++;
             }
 
-            $fila++;
+            $sheet->getRowDimension(1)->setRowHeight(25);
+
+            // ⭐ PASO 7: Escribir datos de productos
+            $fila = 2;
+            while ($producto = $stmt->fetch()) {
+                $col = 1;
+
+                foreach ($camposBD as $campo) {
+                    $valor = $producto[$campo] ?? '';
+
+                    // Formatear valores especiales
+                    if (strpos($campo, 'FEC_') === 0 && !empty($valor) && $valor != '1900-01-01 00:00:00') {
+                        try {
+                            $fecha = new \DateTime($valor);
+                            $valor = $fecha->format('d/m/Y H:i:s');
+                        } catch (\Exception $e) {
+                            $valor = '';
+                        }
+                    } elseif (strpos($campo, 'NUM_PRICE') !== false || strpos($campo, 'NUM_SALE') !== false) {
+                        $valor = $valor > 0 ? floatval($valor) : 0;
+                    } elseif (is_numeric($valor) && strpos($campo, 'NUM_') === 0) {
+                        $valor = floatval($valor);
+                    }
+
+                    $cellCoord = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex($col) . $fila;
+                    $sheet->setCellValue($cellCoord, $valor);
+
+                    // Bordes para las celdas de datos
+                    $sheet->getStyle($cellCoord)->applyFromArray([
+                        'borders' => [
+                            'allBorders' => [
+                                'borderStyle' => Border::BORDER_THIN,
+                                'color' => ['rgb' => 'CCCCCC']
+                            ]
+                        ]
+                    ]);
+
+                    $col++;
+                }
+
+                $fila++;
+            }
+
+            // Aplicar filtros automáticos
+            $lastCol = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(count($headers));
+            $sheet->setAutoFilter('A1:' . $lastCol . '1');
+
+            // Inmovilizar primera fila
+            $sheet->freezePane('A2');
+
+            // Agregar comentario informativo
+            $comentario = "Plantilla: $tituloHoja\n";
+            $comentario .= "ID Plantilla: $idPlantilla\n";
+            $comentario .= "Columnas: " . count($headers) . "\n";
+            $comentario .= "Productos: " . ($fila - 2) . "\n\n";
+            $comentario .= "Los campos con (*) son obligatorios.";
+
+            $sheet->getComment('A1')->getText()->createTextRun($comentario);
+            $sheet->getComment('A1')->setWidth('400px');
+            $sheet->getComment('A1')->setHeight('140px');
+
+            // Generar archivo
+            $filename = 'plantilla_' . preg_replace('/[^A-Za-z0-9_-]/', '_', $nombreClase) .
+                ($nombreTienda ? '_' . preg_replace('/[^A-Za-z0-9_-]/', '_', trim($nombreTienda, ' -')) : '') .
+                '_' . date('Ymd_His') . '.xlsx';
+
+            error_log("✅ Generando archivo: $filename");
+
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename="' . $filename . '"');
+            header('Cache-Control: max-age=0');
+
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+            exit;
+        } catch (\Exception $e) {
+            error_log("❌ Error crítico en obtenerPlantillaExcelControlador: " . $e->getMessage());
+            error_log("Stack trace: " . $e->getTraceAsString());
+            die("Error al generar plantilla: " . $e->getMessage());
         }
-
-        // Aplicar filtros automáticos
-        $lastCol = \PhpOffice\PhpSpreadsheet\Cell\Coordinate::stringFromColumnIndex(count($headers));
-        $sheet->setAutoFilter('A1:' . $lastCol . '1');
-
-        // Inmovilizar primera fila
-        $sheet->freezePane('A2');
-
-        // Agregar comentario informativo
-        $comentario = "Plantilla: $tituloHoja\n";
-        $comentario .= "ID Plantilla: $idPlantilla\n";
-        $comentario .= "Columnas: " . count($headers) . "\n";
-        $comentario .= "Productos: " . ($fila - 2) . "\n\n";
-        $comentario .= "Los campos con (*) son obligatorios.";
-        
-        $sheet->getComment('A1')->getText()->createTextRun($comentario);
-        $sheet->getComment('A1')->setWidth('400px');
-        $sheet->getComment('A1')->setHeight('140px');
-
-        // Generar archivo
-        $filename = 'plantilla_' . preg_replace('/[^A-Za-z0-9_-]/', '_', $nombreClase) . 
-                    ($nombreTienda ? '_' . preg_replace('/[^A-Za-z0-9_-]/', '_', trim($nombreTienda, ' -')) : '') . 
-                    '_' . date('Ymd_His') . '.xlsx';
-        
-        error_log("✅ Generando archivo: $filename");
-        
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="' . $filename . '"');
-        header('Cache-Control: max-age=0');
-
-        $writer = new Xlsx($spreadsheet);
-        $writer->save('php://output');
-        exit;
-
-    } catch (\Exception $e) {
-        error_log("❌ Error crítico en obtenerPlantillaExcelControlador: " . $e->getMessage());
-        error_log("Stack trace: " . $e->getTraceAsString());
-        die("Error al generar plantilla: " . $e->getMessage());
     }
-}
 
     /*---------- Importar CSV ----------*/
     // public function importarCSVControlador()

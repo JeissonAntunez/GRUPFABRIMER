@@ -240,4 +240,40 @@ class plantillaModel extends mainModel
         $result = $sql->fetch();
         return ($result['max_id'] ?? 0) + 1;
     }
+
+
+    /*========== NUEVOS MÉTODOS PARA TABLA DINÁMICA ==========*/
+
+    /*---------- Obtener Plantilla por Clase y Tienda ----------*/
+    public function obtenerPlantillaPorClaseTiendaModelo($idClase, $idTienda)
+    {
+        $sql = "SELECT * FROM plantilla 
+                WHERE NUM_ID_CLASE = :Clase 
+                AND NUM_ID_TIENDA = :Tienda 
+                AND VCH_ESTADO = 'ACTIVO'
+                LIMIT 1";
+
+        $query = $this->conectar()->prepare($sql);
+        $query->bindParam(":Clase", $idClase);
+        $query->bindParam(":Tienda", $idTienda);
+        $query->execute();
+
+        return $query;
+    }
+
+
+    /*---------- Obtener Detalle de Plantilla ordenado ----------*/
+    public function obtenerDetallePlantillaOrdenadoModelo($idPlantilla)
+    {
+        $sql = "SELECT * FROM plant_detalle 
+                WHERE NUM_ID_PLANTILLA = :ID 
+                AND VCH_ESTADO = 'ACTIVO'
+                ORDER BY NUM_ORDEN ASC";
+
+        $query = $this->conectar()->prepare($sql);
+        $query->bindParam(":ID", $idPlantilla);
+        $query->execute();
+
+        return $query;
+    }
 }

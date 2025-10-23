@@ -317,68 +317,8 @@
 
             <div class="table-container">
                 <div class="table-responsive">
-                    <table id="tablaProductos" class="table table-hover table-sm">
-                        <thead>
-                            <tr>
-                                <th>Stock</th>
-                                <th>Clase</th>
-                                <th>Nombre</th>
-                                <th>Marca</th>
-                                <th>Modelo</th>
-                                <th>Descripción</th>
-                                <th>Categoría Primaria</th>
-                                <th>País Producción</th>
-                                <th>Color Básico</th>
-                                <th>Color</th>
-                                <th>Talla</th>
-                                <th>SKU Vendedor</th>
-                                <th>Código Barras</th>
-                                <th>SKU Padre</th>
-                                <th>Cantidad Falabella</th>
-                                <th>Precio</th>
-                                <th>Precio Oferta</th>
-                                <th>Inicio Oferta</th>
-                                <th>Fin Oferta</th>
-                                <th>Fit</th>
-                                <th>Género</th>
-                                <th>Tipo Pantalón</th>
-                                <th>Composición</th>
-                                <th>Material</th>
-                                <th>Condición</th>
-                                <th>Garantía Prod.</th>
-                                <th>Garantía Vend.</th>
-                                <th>Contenido Paquete</th>
-                                <th>Ancho Paquete</th>
-                                <th>Largo Paquete</th>
-                                <th>Alto Paquete</th>
-                                <th>Peso Paquete</th>
-                                <th>Img Principal</th>
-                                <th>Img 2</th>
-                                <th>Img 3</th>
-                                <th>Img 4</th>
-                                <th>Img 5</th>
-                                <th>Img 6</th>
-                                <th>Img 7</th>
-                                <th>Img 8</th>
-                                <th>Moneda</th>
-                                <th>Tipo Publicación</th>
-                                <th>Forma Envío</th>
-                                <th>Costo Envío</th>
-                                <th>Retiro</th>
-                                <th>Peso Prod.</th>
-                                <th>Largo Prod.</th>
-                                <th>Ancho Prod.</th>
-                                <th>Altura Prod.</th>
-                                <th>Tipo Cuello</th>
-                                <th>Tipo Puño</th>
-                                <th>Tipo Cierre</th>
-                                <th>Tipo Garantía</th>
-                                <th>Tabla Talla</th>
-                                <th>Tamaño Prod.</th>
-                                <th class="text-center">Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
+                    <table id="tablaProductos" class="table table-hover table-sm table-bordered">
+                        <!-- La tabla se construirá dinámicamente -->
                     </table>
                 </div>
             </div>

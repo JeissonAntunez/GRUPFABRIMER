@@ -1,22 +1,20 @@
 $(document).ready(function () {
     console.log('✅ producto.js cargado');
     
-    let tablaProductos;
+    let tablaProductos = null;
     let clases = [];
     let tiendas = [];
 
-    // Cargar datos iniciales
     cargarClases();
     cargarTiendas();
     cargarEstadisticas();
-    inicializarTabla();
     cargarProductos();
 
     function cargarClases() {
         const dataClases = document.getElementById('dataClases');
         if (dataClases) {
             clases = JSON.parse(dataClases.textContent);
-            console.log('📋 Clases cargadas:', clases.length);
+            console.log('📋 Clases:', clases.length);
         }
     }
 
@@ -24,38 +22,12 @@ $(document).ready(function () {
         const dataTiendas = document.getElementById('dataTiendas');
         if (dataTiendas) {
             tiendas = JSON.parse(dataTiendas.textContent);
-            console.log('🏪 Tiendas cargadas:', tiendas.length);
+            console.log('🏪 Tiendas:', tiendas.length);
         }
     }
 
-    function inicializarTabla() {
-        tablaProductos = $('#tablaProductos').DataTable({
-            language: {
-                "processing": "Procesando...",
-                "lengthMenu": "Mostrar _MENU_ registros",
-                "zeroRecords": "No se encontraron resultados",
-                "emptyTable": "Ningún dato disponible",
-                "infoEmpty": "Mostrando 0 registros",
-                "infoFiltered": "(filtrado de _MAX_ registros)",
-                "search": "Buscar:",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros"
-            },
-            responsive: true,
-            order: [[0, 'asc']],
-            pageLength: 15,
-            scrollX: true
-        });
-        console.log('✅ Tabla inicializada');
-    }
-
     function cargarProductos(idClase = 0, idTienda = 0, busqueda = '') {
-        console.log('🔍 Cargando productos...');
+        console.log('🔍 Cargando...', { idClase, idTienda, busqueda });
         
         $.ajax({
             url: APP_URL + 'app/ajax/productoAjax.php',
@@ -71,87 +43,122 @@ $(document).ready(function () {
                 console.log('✅ Respuesta:', response);
                 
                 if (response.status === 'ok') {
-                    renderizarTabla(response.data);
+                    // Destruir tabla anterior
+                    if (tablaProductos) {
+                        tablaProductos.destroy();
+                    }
+
+                    if (response.tiene_plantilla) {
+                        console.log('📋 Usando plantilla con', response.headers.length, 'columnas');
+                        crearTablaDinamica(response.headers, response.data);
+                    } else {
+                        console.log('📋 Usando tabla por defecto');
+                        crearTablaEstandar(response.data);
+                    }
+                    
                     $('#totalMostrado').text('(' + response.data.length + ')');
                 } else {
-                    console.error('❌ Error:', response);
-                    alert('Error al cargar productos');
+                    alert('Error: ' + (response.msg || 'Error al cargar'));
                 }
             },
-            error: function (xhr, status, error) {
-                console.error('❌ Error AJAX:', xhr.responseText);
-                alert('Error de conexión: ' + error);
+            error: function (xhr) {
+                console.error('❌ Error:', xhr.responseText);
+                alert('Error de conexión');
             }
         });
     }
 
-    function renderizarTabla(productos) {
-        console.log('📊 Renderizando', productos.length, 'productos');
-        tablaProductos.clear();
-
-        productos.forEach(function (producto) {
-            const fila = [
-                producto.NUM_STOCK || 0,
-                producto.NOMBRE_CLASE || '-',
-                producto.VCH_NOMBRE || '-',
-                producto.VCH_MARCA || '-',
-                producto.VCH_MODELO || '-',
-                producto.VCH_DESCRIPCION || '-',
-                producto.VCH_CATEGORIA_PRIMARIA || '-',
-                producto.VCH_PAIS_PRODUCCION || '-',
-                producto.VCH_BASIC_COLOR || '-',
-                producto.VCH_COLOR || '-',
-                producto.VCH_SIZE || '-',
-                producto.VCH_SKU_VENDEDOR || '-',
-                producto.VCH_CODIGO_BARRAS || '-',
-                producto.VCH_SKU_PADRE || '-',
-                producto.NUM_QUANTITY_FALABELLA || 0,
-                formatearPrecio(producto.NUM_PRICE_FALABELLA),
-                formatearPrecio(producto.NUM_SALE_PRICE_FALABELLA),
-                producto.FEC_SALE_START_DATE || '-',
-                producto.FEC_SALE_END_DATE || '-',
-                producto.VCH_FIT || '-',
-                producto.VCH_COSTUME_GENRE || '-',
-                producto.VCH_PANTS_TYPE || '-',
-                producto.VCH_COMPOSITION || '-',
-                producto.VCH_MATERIAL_VESTUARIO || '-',
-                producto.VCH_CONDICION_PRODUCTO || '-',
-                producto.VCH_GARANTIA_PRODUCTO || '-',
-                producto.VCH_GARANTIA_VENDEDOR || '-',
-                producto.VCH_CONTENIDO_PAQUETE || '-',
-                producto.NUM_ANCHO_PAQUETE || '-',
-                producto.NUM_LARGO_PAQUETE || '-',
-                producto.NUM_ALTO_PAQUETE || '-',
-                producto.NUM_PESO_PAQUETE || '-',
-                '-', '-', '-', '-', '-', '-', '-', '-', // Imágenes
-                producto.VCH_MONEDA || '-',
-                producto.VCH_TIPO_PUBLI || '-',
-                producto.VCH_FORM_ENV || '-',
-                producto.VCH_COSTO_EN || '-',
-                producto.VCH_RETIRO || '-',
-                producto.VCH_PESO_PROD || '-',
-                producto.VCH_LONG_PROD || '-',
-                producto.VCH_ANCHO_PROD || '-',
-                producto.VCH_ALTURA_PROD || '-',
-                producto.VCH_TIPO_CUE || '-',
-                producto.VCH_TIPO_PUN || '-',
-                producto.VCH_TIPO_CIER || '-',
-                producto.VCH_TIPO_GARANT || '-',
-                producto.VCH_TABLA_TALLA || '-',
-                producto.VCH_TAMANIO_PROD || '-',
-                `<button class="btn btn-sm btn-danger btn-eliminar" data-id="${producto.NUM_ID_PRODUCTO}">
-                    <i class="fas fa-trash"></i>
-                </button>`
-            ];
-
-            tablaProductos.row.add(fila);
+    function crearTablaDinamica(headers, productos) {
+        console.log('🔨 Creando tabla dinámica...');
+        
+        // Construir HTML completo
+        let html = '<thead><tr>';
+        
+        // Encabezados
+        headers.forEach(h => {
+            html += `<th>${h.nombre}</th>`;
         });
-
-        tablaProductos.draw();
-        console.log('✅ Tabla renderizada');
+        html += '<th>Acciones</th></tr></thead><tbody>';
+        
+        // Filas
+        productos.forEach(prod => {
+            html += '<tr>';
+            headers.forEach(h => {
+                let valor = prod[h.campo] || '-';
+                
+                // Formatear precios
+                if (h.campo && h.campo.includes('PRICE')) {
+                    valor = formatearPrecio(valor);
+                }
+                
+                html += `<td>${valor}</td>`;
+            });
+            html += `<td><button class="btn btn-sm btn-danger btn-eliminar" data-id="${prod.NUM_ID_PRODUCTO}">
+                <i class="fas fa-trash"></i>
+            </button></td></tr>`;
+        });
+        
+        html += '</tbody>';
+        
+        // Insertar
+        $('#tablaProductos').html(html);
+        
+        // Inicializar DataTable
+        tablaProductos = $('#tablaProductos').DataTable({
+            language: {
+                "search": "Buscar:",
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            pageLength: 15,
+            scrollX: true
+        });
+        
+        console.log('✅ Tabla creada');
     }
 
-    // FUNCIONES AUXILIARES
+    function crearTablaEstandar(productos) {
+        console.log('🔨 Creando tabla estándar...');
+        
+        let html = `<thead><tr>
+            <th>Stock</th><th>Clase</th><th>Nombre</th><th>Marca</th>
+            <th>Modelo</th><th>Precio</th><th>Acciones</th>
+        </tr></thead><tbody>`;
+        
+        productos.forEach(prod => {
+            html += `<tr>
+                <td>${prod.NUM_STOCK || 0}</td>
+                <td>${prod.NOMBRE_CLASE || '-'}</td>
+                <td>${prod.VCH_NOMBRE || '-'}</td>
+                <td>${prod.VCH_MARCA || '-'}</td>
+                <td>${prod.VCH_MODELO || '-'}</td>
+                <td>${formatearPrecio(prod.NUM_PRICE_FALABELLA)}</td>
+                <td><button class="btn btn-sm btn-danger btn-eliminar" data-id="${prod.NUM_ID_PRODUCTO}">
+                    <i class="fas fa-trash"></i>
+                </button></td>
+            </tr>`;
+        });
+        
+        html += '</tbody>';
+        $('#tablaProductos').html(html);
+        
+        tablaProductos = $('#tablaProductos').DataTable({
+            language: {
+                "search": "Buscar:",
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "info": "Mostrando _START_ a _END_ de _TOTAL_"
+            },
+            pageLength: 15,
+            scrollX: true
+        });
+    }
+
     function formatearPrecio(precio) {
         if (!precio || precio == 0) return '$0.00';
         return '$' + parseFloat(precio).toFixed(2);
@@ -190,21 +197,54 @@ $(document).ready(function () {
     });
 
     $('#btnDescargarPlantillaVacia').click(function () {
+        window.location.href = APP_URL + 'app/ajax/productoAjax.php?modulo_producto=obtener_plantilla_vacia';
+    });
+
+    $('#btnDescargarPlantilla').click(function () {
+        const idClase = $('#f_clase').val() || 0;
+        
+        if (idClase == 0) {
+            alert('⚠️ Debe seleccionar una Clase');
+            return;
+        }
+        
+        const idTienda = $('#f_tienda').val() || 0;
+        window.location.href = APP_URL + 'app/ajax/productoAjax.php?modulo_producto=obtener_plantilla_excel&id_clase=' + idClase + '&id_tienda=' + idTienda;
+    });
+
+    $('#btnProcesarCSV').click(function () {
+        const archivo = $('#archivoCSV')[0].files[0];
+        
+        if (!archivo) {
+            alert('⚠️ Seleccione un archivo');
+            return;
+        }
+        
+        const formData = new FormData();
+        formData.append('archivo_csv', archivo);
+        formData.append('modulo_producto', 'importar_csv');
+        
+        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Procesando...');
+        
         $.ajax({
             url: APP_URL + 'app/ajax/productoAjax.php',
             type: 'POST',
-            data: { modulo_producto: 'obtener_plantilla_vacia' },
+            data: formData,
+            processData: false,
+            contentType: false,
             dataType: 'json',
             success: function (response) {
                 if (response.status === 'ok') {
-                    const csv = response.headers.join(',');
-                    const blob = new Blob([csv], { type: 'text/csv' });
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'plantilla_vacia.csv';
-                    a.click();
+                    alert('✅ Importación exitosa!');
+                    $('#modalImportar').modal('hide');
+                    cargarProductos();
+                    cargarEstadisticas();
+                } else {
+                    alert('❌ Error: ' + response.msg);
                 }
+            },
+            complete: function () {
+                $('#btnProcesarCSV').prop('disabled', false).html('<i class="fas fa-upload"></i> Importar');
             }
         });
     });
@@ -212,118 +252,22 @@ $(document).ready(function () {
     $(document).on('click', '.btn-eliminar', function () {
         const id = $(this).data('id');
         
-        if (confirm('¿Eliminar este producto?')) {
+        if (confirm('¿Eliminar producto?')) {
             $.ajax({
                 url: APP_URL + 'app/ajax/productoAjax.php',
                 type: 'POST',
-                data: {
-                    modulo_producto: 'eliminar',
-                    id: id
-                },
+                data: { modulo_producto: 'eliminar', id: id },
                 dataType: 'json',
                 success: function (response) {
                     if (response.status === 'ok') {
                         alert('Producto eliminado');
-                        cargarProductos();
+                        const idClase = $('#f_clase').val() || 0;
+                        const idTienda = $('#f_tienda').val() || 0;
+                        cargarProductos(idClase, idTienda);
                         cargarEstadisticas();
-                    } else {
-                        alert('Error: ' + response.msg);
                     }
                 }
             });
         }
     });
-
-    // ⭐ PLANTILLA VACÍA
-$('#btnDescargarPlantillaVacia').click(function () {
-    console.log('📥 Descargando plantilla vacía...');
-    window.location.href = APP_URL + 'app/ajax/productoAjax.php?modulo_producto=obtener_plantilla_vacia';
-});
-
-// ⭐ PLANTILLA ESPECÍFICA
-$('#btnDescargarPlantilla').click(function () {
-    const idClase = $('#f_clase').val() || 0;
-    const idTienda = $('#f_tienda').val() || 0;
-    
-    if (idClase == 0) {
-        alert('⚠️ Debe seleccionar una Clase para generar la plantilla específica');
-        $('#f_clase').focus();
-        return;
-    }
-    
-    console.log('📥 Descargando plantilla específica...', { idClase, idTienda });
-    window.location.href = APP_URL + 'app/ajax/productoAjax.php?modulo_producto=obtener_plantilla_excel&id_clase=' + idClase + '&id_tienda=' + idTienda;
-});
-
-
-// ⭐ IMPORTAR CSV/EXCEL
-$('#btnProcesarCSV').click(function () {
-    const archivo = $('#archivoCSV')[0].files[0];
-    
-    if (!archivo) {
-        alert('⚠️ Debe seleccionar un archivo');
-        return;
-    }
-    
-    // Validar extensión
-    const extension = archivo.name.split('.').pop().toLowerCase();
-    if (!['csv', 'xlsx', 'xls'].includes(extension)) {
-        alert('⚠️ Formato no válido. Use CSV o Excel (.xlsx, .xls)');
-        return;
-    }
-    
-    const formData = new FormData();
-    formData.append('archivo_csv', archivo);
-    formData.append('modulo_producto', 'importar_csv');
-    
-    console.log('📤 Subiendo archivo:', archivo.name);
-    
-    // Mostrar loading
-    $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Procesando...');
-    
-    $.ajax({
-        url: APP_URL + 'app/ajax/productoAjax.php',
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        dataType: 'json',
-        success: function (response) {
-            console.log('✅ Respuesta:', response);
-            
-            if (response.status === 'ok') {
-                let mensaje = `✅ Importación exitosa!\n\n`;
-                mensaje += `📊 Productos insertados: ${response.insertados}\n`;
-                mensaje += `📝 Total líneas procesadas: ${response.total_lineas}`;
-                
-                if (response.errores && response.errores.length > 0) {
-                    mensaje += `\n\n⚠️ Advertencias (${response.errores.length}):\n`;
-                    mensaje += response.errores.slice(0, 5).join('\n');
-                    if (response.errores.length > 5) {
-                        mensaje += `\n... y ${response.errores.length - 5} más`;
-                    }
-                }
-                
-                alert(mensaje);
-                $('#modalImportar').modal('hide');
-                cargarProductos();
-                cargarEstadisticas();
-            } else {
-                alert('❌ Error: ' + response.msg);
-            }
-        },
-        error: function (xhr, status, error) {
-            console.error('❌ Error AJAX:', xhr.responseText);
-            alert('❌ Error al procesar el archivo:\n' + error + '\n\nRevisa la consola para más detalles.');
-        },
-        complete: function () {
-            $('#btnProcesarCSV').prop('disabled', false).html('<i class="fas fa-upload"></i> Importar');
-        }
-    });
-});
-
-// Limpiar archivo al cerrar modal
-$('#modalImportar').on('hidden.bs.modal', function () {
-    $('#archivoCSV').val('');
-});
 });

@@ -4,7 +4,6 @@ require_once "../../config/app.php";
 require_once "../views/inc/session_start.php";
 require_once "../../autoload.php";
 
-// Detectar módulo desde POST o GET
 $modulo = $_POST['modulo_producto'] ?? $_GET['modulo_producto'] ?? null;
 
 if ($modulo) {
@@ -24,28 +23,76 @@ if ($modulo) {
     }
 
     if ($modulo == "listar") {
-        $idClase = $_POST['id_clase'] ?? 0;
-        $idTienda = $_POST['id_tienda'] ?? 0;
+        $idClase = intval($_POST['id_clase'] ?? 0);
+        $idTienda = intval($_POST['id_tienda'] ?? 0);
         $busqueda = $_POST['busqueda'] ?? '';
 
+        // Obtener productos (solo por clase)
         $productos = $insProducto->listarProductosControlador($idClase, $idTienda, $busqueda);
-
         $data = [];
         while ($row = $productos->fetch()) {
             $data[] = $row;
         }
 
-        echo json_encode(['status' => 'ok', 'data' => $data]);
+        // Obtener headers dinámicos de plantilla
+        $headers = [];
+
+        if ($idClase > 0 && $idTienda > 0) {
+            require_once "../models/plantillaModel.php";
+            $plantillaModel = new app\models\plantillaModel();
+
+            // Misma consulta que usas para el Excel
+            $sql = "SELECT NUM_ID_PLANTILLA FROM plantilla 
+                    WHERE NUM_ID_CLASE = :clase 
+                    AND NUM_ID_TIENDA = :tienda 
+                    AND VCH_ESTADO = 1 
+                    LIMIT 1";
+
+            $stmt = $plantillaModel->conectar()->prepare($sql);
+            $stmt->bindParam(':clase', $idClase, PDO::PARAM_INT);
+            $stmt->bindParam(':tienda', $idTienda, PDO::PARAM_INT);
+            $stmt->execute();
+
+            if ($stmt->rowCount() > 0) {
+                $plantilla = $stmt->fetch();
+                $idPlantilla = $plantilla['NUM_ID_PLANTILLA'];
+
+                // Obtener columnas ordenadas
+                $sqlDetalle = "SELECT VCH_CAMPO, VCH_NOMBRE_PLANTILLA, NUM_ORDEN 
+                               FROM plant_detalle 
+                               WHERE NUM_ID_PLANTILLA = :id 
+                               AND VCH_ESTADO = 1 
+                               ORDER BY NUM_ORDEN ASC";
+
+                $stmtDetalle = $plantillaModel->conectar()->prepare($sqlDetalle);
+                $stmtDetalle->bindParam(':id', $idPlantilla, PDO::PARAM_INT);
+                $stmtDetalle->execute();
+
+                while ($detalle = $stmtDetalle->fetch()) {
+                    $headers[] = [
+                        'nombre' => $detalle['VCH_CAMPO'],                    // Para el <th>
+                        'campo' => $detalle['VCH_NOMBRE_PLANTILLA'],          // Para obtener el dato
+                        'orden' => $detalle['NUM_ORDEN']
+                    ];
+                }
+            }
+        }
+
+        echo json_encode([
+            'status' => 'ok',
+            'data' => $data,
+            'headers' => $headers,
+            'tiene_plantilla' => !empty($headers)
+        ]);
+        exit;
     }
 
-    // ⭐ Plantilla vacía (soporta GET)
     if ($modulo == "obtener_plantilla_vacia") {
-        $insProducto->obtenerPlantillaVaciaControlador(); // Ya hace exit interno
+        $insProducto->obtenerPlantillaVaciaControlador();
     }
 
-    // ⭐ Plantilla específica (soporta GET)
     if ($modulo == "obtener_plantilla_excel") {
-        $insProducto->obtenerPlantillaExcelControlador(); // Ya hace exit interno
+        $insProducto->obtenerPlantillaExcelControlador();
     }
 
     if ($modulo == "importar_csv") {

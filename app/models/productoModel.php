@@ -67,35 +67,65 @@ class productoModel extends mainModel
     }
 
     /*---------- Listar Productos con Filtros ----------*/
-    public function listarProductosFiltrosModelo($idClase = 0, $idTienda = 0, $busqueda = '')
+    // public function listarProductosFiltrosModelo($idClase = 0, $idTienda = 0, $busqueda = '')
+    // {
+    //     $sql = "SELECT p.*, 
+    //         c.VCH_NOMBRE AS NOMBRE_CLASE
+    //         FROM producto p
+    //         LEFT JOIN clase c ON p.NUM_ID_CLASE = c.NUM_ID_CLASE
+    //         WHERE 1=1";
+
+    //     if ($idClase > 0) {
+    //         $sql .= " AND p.NUM_ID_CLASE = $idClase";
+    //     }
+
+    //     if ($idTienda > 0) {
+    //         $sql .= " AND p.NUM_ID_TIENDA = $idTienda";
+    //     }
+
+    //     if (!empty($busqueda)) {
+    //         $busqueda = $this->limpiarCadena($busqueda);
+    //         $sql .= " AND (p.VCH_NOMBRE LIKE '%$busqueda%' 
+    //                   OR p.VCH_SKU_VENDEDOR LIKE '%$busqueda%'
+    //                   OR p.VCH_MARCA LIKE '%$busqueda%'
+    //                   OR p.VCH_MODELO LIKE '%$busqueda%')";
+    //     }
+
+    //     $sql .= " ORDER BY p.NUM_ID_PRODUCTO DESC";
+
+    //     return $this->ejecutarConsulta($sql);
+    // }
+
+
+    /*---------- Listar Productos con Filtros ----------*/
+    public function listarProductosFiltrosModelo($idClase = 0, $busqueda = '')
     {
         $sql = "SELECT p.*, 
-            c.VCH_NOMBRE AS NOMBRE_CLASE
-            FROM producto p
-            LEFT JOIN clase c ON p.NUM_ID_CLASE = c.NUM_ID_CLASE
-            WHERE 1=1";
+        c.VCH_NOMBRE AS NOMBRE_CLASE
+        FROM producto p
+        LEFT JOIN clase c ON p.NUM_ID_CLASE = c.NUM_ID_CLASE
+        WHERE 1=1";
 
+        // Solo filtrar por clase (producto NO tiene tienda)
         if ($idClase > 0) {
             $sql .= " AND p.NUM_ID_CLASE = $idClase";
         }
 
-        if ($idTienda > 0) {
-            $sql .= " AND p.NUM_ID_TIENDA = $idTienda";
-        }
-
+        // Filtro de búsqueda
         if (!empty($busqueda)) {
-            $busqueda = $this->limpiarCadena($busqueda);
-            $sql .= " AND (p.VCH_NOMBRE LIKE '%$busqueda%' 
-                      OR p.VCH_SKU_VENDEDOR LIKE '%$busqueda%'
-                      OR p.VCH_MARCA LIKE '%$busqueda%'
-                      OR p.VCH_MODELO LIKE '%$busqueda%')";
+            $sql .= " AND (
+            p.VCH_NOMBRE LIKE '%$busqueda%' OR
+            p.VCH_MARCA LIKE '%$busqueda%' OR
+            p.VCH_MODELO LIKE '%$busqueda%' OR
+            p.VCH_SKU_VENDEDOR LIKE '%$busqueda%' OR
+            p.VCH_CODIGO_BARRAS LIKE '%$busqueda%'
+        )";
         }
 
         $sql .= " ORDER BY p.NUM_ID_PRODUCTO DESC";
 
         return $this->ejecutarConsulta($sql);
     }
-
     // /*---------- Obtener columnas dinámicas según clase y tienda ----------*/
     // public function obtenerColumnasDinamicasModelo($idClase, $idTienda = 0)
     // {
@@ -186,34 +216,34 @@ class productoModel extends mainModel
     //     $result = $stmt->fetch();
     //     return $result['total'] > 0;
     // }
-/*---------- Verificar si plantilla existe para clase/tienda ----------*/
-public function verificarPlantillaExisteModelo($idClase, $idTienda = 0)
-{
-    $sql = "SELECT p.NUM_ID_PLANTILLA
+    /*---------- Verificar si plantilla existe para clase/tienda ----------*/
+    public function verificarPlantillaExisteModelo($idClase, $idTienda = 0)
+    {
+        $sql = "SELECT p.NUM_ID_PLANTILLA
             FROM plantilla p
             WHERE p.NUM_ID_CLASE = :IdClase
             AND p.VCH_ESTADO = 1";
 
-    if ($idTienda > 0) {
-        $sql .= " AND p.NUM_ID_TIENDA = :IdTienda";
-    }
+        if ($idTienda > 0) {
+            $sql .= " AND p.NUM_ID_TIENDA = :IdTienda";
+        }
 
-    $sql .= " AND EXISTS (
+        $sql .= " AND EXISTS (
                 SELECT 1 FROM plant_detalle pd 
                 WHERE pd.NUM_ID_PLANTILLA = p.NUM_ID_PLANTILLA
                 AND pd.VCH_ESTADO = 1
             )
             LIMIT 1";
 
-    $stmt = $this->conectar()->prepare($sql);
-    $stmt->bindParam(":IdClase", $idClase, \PDO::PARAM_INT);
-    if ($idTienda > 0) {
-        $stmt->bindParam(":IdTienda", $idTienda, \PDO::PARAM_INT);
-    }
-    $stmt->execute();
+        $stmt = $this->conectar()->prepare($sql);
+        $stmt->bindParam(":IdClase", $idClase, \PDO::PARAM_INT);
+        if ($idTienda > 0) {
+            $stmt->bindParam(":IdTienda", $idTienda, \PDO::PARAM_INT);
+        }
+        $stmt->execute();
 
-    return $stmt->rowCount() > 0;
-}
+        return $stmt->rowCount() > 0;
+    }
 
 
     /*---------- Obtener opciones de lista por juego ----------*/
@@ -437,38 +467,38 @@ public function verificarPlantillaExisteModelo($idClase, $idTienda = 0)
     }
 
     /*---------- ⭐ NUEVO: Obtener ID de plantilla según clase y tienda ----------*/
-public function obtenerIdPlantillaModelo($idClase, $idTienda = 0)
-{
-    $sql = "SELECT NUM_ID_PLANTILLA 
+    public function obtenerIdPlantillaModelo($idClase, $idTienda = 0)
+    {
+        $sql = "SELECT NUM_ID_PLANTILLA 
             FROM plantilla 
             WHERE NUM_ID_CLASE = :IdClase";
-    
-    if ($idTienda > 0) {
-        $sql .= " AND NUM_ID_TIENDA = :IdTienda";
-    }
-    
-    $sql .= " AND VCH_ESTADO = 1
-              LIMIT 1";
-    
-    $stmt = $this->conectar()->prepare($sql);
-    $stmt->bindParam(":IdClase", $idClase, \PDO::PARAM_INT);
-    if ($idTienda > 0) {
-        $stmt->bindParam(":IdTienda", $idTienda, \PDO::PARAM_INT);
-    }
-    $stmt->execute();
-    
-    if ($stmt->rowCount() > 0) {
-        $row = $stmt->fetch();
-        return $row['NUM_ID_PLANTILLA'];
-    }
-    
-    return null;
-}
 
-/*---------- ⭐ NUEVO: Obtener columnas por ID de plantilla ----------*/
-public function obtenerColumnasPorPlantillaModelo($idPlantilla)
-{
-    $sql = "SELECT 
+        if ($idTienda > 0) {
+            $sql .= " AND NUM_ID_TIENDA = :IdTienda";
+        }
+
+        $sql .= " AND VCH_ESTADO = 1
+              LIMIT 1";
+
+        $stmt = $this->conectar()->prepare($sql);
+        $stmt->bindParam(":IdClase", $idClase, \PDO::PARAM_INT);
+        if ($idTienda > 0) {
+            $stmt->bindParam(":IdTienda", $idTienda, \PDO::PARAM_INT);
+        }
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch();
+            return $row['NUM_ID_PLANTILLA'];
+        }
+
+        return null;
+    }
+
+    /*---------- ⭐ NUEVO: Obtener columnas por ID de plantilla ----------*/
+    public function obtenerColumnasPorPlantillaModelo($idPlantilla)
+    {
+        $sql = "SELECT 
             pd.VCH_CAMPO AS CAMPO_ETIQUETA,
             pd.VCH_NOMBRE_PLANTILLA AS CAMPO_BD,
             pd.VCH_OBLIGATORIO AS OBLIGATORIO,
@@ -477,11 +507,11 @@ public function obtenerColumnasPorPlantillaModelo($idPlantilla)
             WHERE pd.NUM_ID_PLANTILLA = :IdPlantilla
             AND pd.VCH_ESTADO = 1
             ORDER BY pd.NUM_ORDEN ASC";
-    
-    $stmt = $this->conectar()->prepare($sql);
-    $stmt->bindParam(":IdPlantilla", $idPlantilla, \PDO::PARAM_INT);
-    $stmt->execute();
-    
-    return $stmt;
-}
+
+        $stmt = $this->conectar()->prepare($sql);
+        $stmt->bindParam(":IdPlantilla", $idPlantilla, \PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt;
+    }
 }
