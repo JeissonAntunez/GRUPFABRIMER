@@ -27,10 +27,36 @@ if ($modulo) {
         $idTienda = intval($_POST['id_tienda'] ?? 0);
         $busqueda = $_POST['busqueda'] ?? '';
 
+        // ⭐ CARGAR CACHE DE LISTAS PARA TRADUCCIÓN
+        $cacheListas = [];
+        if ($idTienda > 0) {
+            try {
+                require_once "../models/listaModel.php";
+                $listaModel = new app\models\listaModel();
+
+                $sqlListas = "SELECT VCH_CODIGO, VCH_DESCRIPCION FROM listas WHERE NUM_ID_TIENDA = :tienda AND VCH_ESTADO = 1";
+                $stmtListas = $listaModel->conectar()->prepare($sqlListas);
+                $stmtListas->bindParam(":tienda", $idTienda, PDO::PARAM_INT);
+                $stmtListas->execute();
+
+                while ($lista = $stmtListas->fetch()) {
+                    $cacheListas[$lista['VCH_CODIGO']] = $lista['VCH_DESCRIPCION'];
+                }
+            } catch (Exception $e) {
+                error_log("Error cargando cache listas: " . $e->getMessage());
+            }
+        }
+
         // Obtener productos (solo por clase)
         $productos = $insProducto->listarProductosControlador($idClase, $idTienda, $busqueda);
         $data = [];
         while ($row = $productos->fetch()) {
+            // ⭐ TRADUCIR CÓDIGOS A DESCRIPCIONES
+            foreach ($row as $key => $valor) {
+                if (!empty($valor) && is_string($valor) && isset($cacheListas[$valor])) {
+                    $row[$key] = $cacheListas[$valor];
+                }
+            }
             $data[] = $row;
         }
 
