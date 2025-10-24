@@ -135,8 +135,15 @@ $(document).ready(function () {
         console.log('🔨 Creando tabla estándar...');
         
         let html = `<thead><tr>
-            <th>Stock</th><th>Clase</th><th>Nombre</th><th>Marca</th>
-            <th>Modelo</th><th>Precio</th><th>Sku Vendedor</th><th>Acciones</th>
+            <th >Stock</th>
+            <th>Clase</th>
+            <th>Nombre</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Precio</th>
+            <th>Sku Vendedor</th>
+            <th>Sku Padre</th>
+            <th>Acciones</th>
         </tr></thead><tbody>`;
         
         productos.forEach(prod => {
@@ -148,6 +155,7 @@ $(document).ready(function () {
                 <td>${prod.VCH_MODELO || '-'}</td>
                 <td>${formatearPrecio(prod.NUM_PRICE_FALABELLA)}</td>
                 <td>${prod.VCH_SKU_VENDEDOR || '-'}</td>
+                <td>${prod.VCH_SKU_PADRE || '-'}</td>
                 <td>
                     <button class="btn btn-sm btn-warning btn-editar me-1" data-producto='${JSON.stringify(prod).replace(/'/g, "&apos;")}'>
                         <i class="fas fa-edit"></i>

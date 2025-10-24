@@ -1,0 +1,392 @@
+:root {
+    --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --success-color: #10b981;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
+}
+
+body {
+    background: #f8fafc;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Header */
+.container.is-fluid.mb-6 {
+    background: var(--primary-gradient);
+    padding: 2.5rem 1.5rem;
+    margin-bottom: 2rem !important;
+    color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-radius: 0 0 24px 24px;
+    text-align: center; /* Centrar contenido */
+}
+
+.title {
+    color: white !important;
+    font-weight: 700 !important;
+    font-size: 2.5rem !important; /* Más grande */
+    margin-bottom: 2rem !important;
+    text-align: center;
+}
+
+.subtitle {
+    color: rgba(255, 255, 255, 0.9) !important;
+    font-size: 1.125rem !important; /* Más grande */
+    font-weight: 400 !important;
+    text-align: center;
+}
+
+/* Container principal */
+.container.pb-6.pt-6 {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Botón agregar */
+#btnAddTienda {
+    background: var(--success-color) !important;
+    color: white !important;
+    border: none !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    border-radius: 12px !important;
+    transition: all 0.2s !important;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3) !important;
+}
+
+#btnAddTienda:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+#btnAddTienda i {
+    margin-right: 0.5rem;
+}
+
+/* Contador de tiendas */
+.has-text-centered.mb-4 {
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 1rem;
+    color: #475569;
+}
+
+.has-text-centered.mb-4 strong {
+    color: #667eea;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Tabla */
+.table-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    padding: 1rem;
+}
+
+#tablaTiendas {
+    width: 100% !important;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: none !important;
+}
+
+#tablaTiendas thead tr {
+    background: var(--primary-gradient) !important;
+}
+
+#tablaTiendas thead th {
+    background: transparent !important;
+    color: white !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    padding: 1.25rem 1rem !important;
+    border: none !important;
+}
+
+#tablaTiendas tbody td {
+    padding: 1rem !important;
+    vertical-align: middle !important;
+    border: none !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    font-size: 0.938rem;
+    color: #334155;
+}
+
+#tablaTiendas tbody tr {
+    transition: all 0.2s;
+    background: white;
+}
+
+#tablaTiendas tbody tr:hover {
+    background: #f8fafc !important;
+    transform: scale(1.001);
+}
+
+#tablaTiendas tbody tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* Switch Toggle */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    vertical-align: middle;
+    margin-right: 0.5rem;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #cbd5e1;
+    transition: .3s;
+    border-radius: 26px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    transition: .3s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked + .slider {
+    background: var(--success-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+/* Estado Label */
+.estado-label {
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 9999px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.estado-label.activo {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.estado-label.inactivo {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* Botones de acciones */
+.button.is-warning {
+    background: var(--warning-color) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s !important;
+    margin-right: 0.5rem;
+}
+
+.button.is-warning:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3) !important;
+}
+
+.button.is-danger {
+    background: var(--danger-color) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 500 !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s !important;
+}
+
+.button.is-danger:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3) !important;
+}
+
+.button i {
+    margin-right: 0.375rem;
+}
+
+/* Fila de edición */
+.editing-row {
+    background: #fef3c7 !important;
+    box-shadow: inset 0 0 0 2px var(--warning-color);
+    animation: slideIn 0.3s ease-out;
+}
+
+.editing-row td {
+    padding: 0.75rem !important;
+}
+
+/* Inputs de edición */
+.input.is-small {
+    border-radius: 8px !important;
+    border: 1px solid #e2e8f0 !important;
+    padding: 0.625rem 0.875rem !important;
+    font-size: 0.875rem !important;
+    transition: all 0.2s;
+}
+
+.input.is-small:focus {
+    border-color: #667eea !important;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+}
+
+/* Botones en modo edición */
+.editing-row .button.is-success {
+    background: var(--success-color) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 500 !important;
+    margin-right: 0.5rem;
+}
+
+.editing-row .button.is-light {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.5rem 1rem !important;
+    font-weight: 500 !important;
+}
+
+/* Animaciones */
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.editing-row,
+.adding-row {
+    animation: slideIn 0.3s ease-out;
+}
+
+/* Campo requerido */
+.required-field {
+    color: var(--danger-color);
+    font-weight: bold;
+}
+
+/* Mensaje de vacío */
+#tablaTiendas tbody tr td[colspan="3"] {
+    padding: 3rem 1rem !important;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.5rem !important;
+    }
+
+    .subtitle {
+        font-size: 0.875rem !important;
+    }
+
+    #btnAddTienda {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #tablaTiendas thead th {
+        font-size: 0.75rem !important;
+        padding: 0.875rem 0.5rem !important;
+    }
+
+    #tablaTiendas tbody td {
+        padding: 0.75rem 0.5rem !important;
+        font-size: 0.813rem;
+    }
+
+    .button.is-small {
+        font-size: 0.75rem !important;
+        padding: 0.375rem 0.625rem !important;
+    }
+
+    .estado-label {
+        display: block;
+        margin-top: 0.5rem;
+    }
+
+    .switch {
+        display: block;
+        margin: 0 auto 0.5rem;
+    }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Efecto loading */
+.button.is-loading::after {
+    border-color: transparent transparent white white !important;
+}
+
+/* Sombras para botones */
+.button:active {
+    transform: translateY(0) !important;
+    box-shadow: none !important;
+}

@@ -184,6 +184,16 @@
             color: white;
         }
 
+
+       .table-responsive {
+    width: 100%;
+}
+
+#tablaProductos {
+    width: 100% !important;
+    table-layout: auto; /* o fixed para ancho uniforme */
+}
+
         @media (max-width: 768px) {
             .stats-number {
                 font-size: 1.8rem;
@@ -341,8 +351,11 @@
             </div>
 
             <div class="table-container">
-                <div class="table-responsive">
-                    <table id="tablaProductos" class="table table-hover table-sm table-bordered">
+                <!-- <div class="table-responsive">
+                    <table id="tablaProductos" class="table table-hover table-sm table-bordered"> -->
+<div class="table-responsive">
+    <table id="tablaProductos" class="table table-striped table-hover w-100"></table>
+
                         <!-- La tabla se construirá dinámicamente -->
                     </table>
                 </div>

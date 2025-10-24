@@ -1,9 +1,10 @@
 <div class="container is-fluid mb-6">
     <h1 class="title">Tiendas</h1>
+ 
     <h2 class="subtitle">Gestión de Tiendas</h2>
 </div>
 
-<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/tienda.css">
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/tienda2.css">
 
 <div class="container pb-6 pt-6">
 
