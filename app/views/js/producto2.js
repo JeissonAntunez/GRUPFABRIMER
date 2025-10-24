@@ -4,6 +4,7 @@ $(document).ready(function () {
     let tablaProductos = null;
     let clases = [];
     let tiendas = [];
+    let headersActuales = []; // Guardamos los headers para el modal
 
     cargarClases();
     cargarTiendas();
@@ -50,9 +51,11 @@ $(document).ready(function () {
 
                     if (response.tiene_plantilla) {
                         console.log('📋 Usando plantilla con', response.headers.length, 'columnas');
+                        headersActuales = response.headers;
                         crearTablaDinamica(response.headers, response.data);
                     } else {
                         console.log('📋 Usando tabla por defecto');
+                        headersActuales = [];
                         crearTablaEstandar(response.data);
                     }
                     
@@ -93,9 +96,14 @@ $(document).ready(function () {
                 
                 html += `<td>${valor}</td>`;
             });
-            html += `<td><button class="btn btn-sm btn-danger btn-eliminar" data-id="${prod.NUM_ID_PRODUCTO}">
-                <i class="fas fa-trash"></i>
-            </button></td></tr>`;
+            html += `<td>
+                <button class="btn btn-sm btn-warning btn-editar me-1" data-producto='${JSON.stringify(prod).replace(/'/g, "&apos;")}'>
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-danger btn-eliminar" data-id="${prod.NUM_ID_PRODUCTO}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </td></tr>`;
         });
         
         html += '</tbody>';
@@ -128,7 +136,7 @@ $(document).ready(function () {
         
         let html = `<thead><tr>
             <th>Stock</th><th>Clase</th><th>Nombre</th><th>Marca</th>
-            <th>Modelo</th><th>Precio</th><th>Acciones</th>
+            <th>Modelo</th><th>Precio</th><th>Sku Vendedor</th><th>Acciones</th>
         </tr></thead><tbody>`;
         
         productos.forEach(prod => {
@@ -139,9 +147,15 @@ $(document).ready(function () {
                 <td>${prod.VCH_MARCA || '-'}</td>
                 <td>${prod.VCH_MODELO || '-'}</td>
                 <td>${formatearPrecio(prod.NUM_PRICE_FALABELLA)}</td>
-                <td><button class="btn btn-sm btn-danger btn-eliminar" data-id="${prod.NUM_ID_PRODUCTO}">
-                    <i class="fas fa-trash"></i>
-                </button></td>
+                <td>${prod.VCH_SKU_VENDEDOR || '-'}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning btn-editar me-1" data-producto='${JSON.stringify(prod).replace(/'/g, "&apos;")}'>
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="btn btn-sm btn-danger btn-eliminar" data-id="${prod.NUM_ID_PRODUCTO}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
             </tr>`;
         });
         
@@ -179,6 +193,51 @@ $(document).ready(function () {
                 }
             }
         });
+    }
+
+    // FUNCIÓN PARA ABRIR MODAL DE EDICIÓN
+    function abrirModalEditar(producto) {
+        console.log('📝 Editando producto:', producto);
+        
+        let html = '<form id="formEditarProducto">';
+        html += `<input type="hidden" name="id_producto" value="${producto.NUM_ID_PRODUCTO}">`;
+        
+        // Si hay headers dinámicos, usarlos
+        if (headersActuales.length > 0) {
+            headersActuales.forEach(h => {
+                // Omitir el ID principal
+                if (h.campo === 'NUM_ID_PRODUCTO') return;
+                
+                let valor = producto[h.campo] || '';
+                
+                html += `<div class="mb-3">
+                    <label class="form-label">${h.nombre}</label>
+                    <input type="text" class="form-control" name="${h.campo}" value="${valor}">
+                </div>`;
+            });
+        } else {
+            // Campos estándar
+            const campos = [
+                { nombre: 'Stock', campo: 'NUM_STOCK', tipo: 'number' },
+                { nombre: 'Nombre', campo: 'VCH_NOMBRE', tipo: 'text' },
+                { nombre: 'Marca', campo: 'VCH_MARCA', tipo: 'text' },
+                { nombre: 'Modelo', campo: 'VCH_MODELO', tipo: 'text' },
+                { nombre: 'Precio', campo: 'NUM_PRICE_FALABELLA', tipo: 'number' }
+            ];
+            
+            campos.forEach(c => {
+                let valor = producto[c.campo] || '';
+                html += `<div class="mb-3">
+                    <label class="form-label">${c.nombre}</label>
+                    <input type="${c.tipo}" class="form-control" name="${c.campo}" value="${valor}" step="0.01">
+                </div>`;
+            });
+        }
+        
+        html += '</form>';
+        
+        $('#modalEditarBody').html(html);
+        $('#modalEditar').modal('show');
     }
 
     // EVENTOS
@@ -245,6 +304,44 @@ $(document).ready(function () {
             },
             complete: function () {
                 $('#btnProcesarCSV').prop('disabled', false).html('<i class="fas fa-upload"></i> Importar');
+            }
+        });
+    });
+
+    // EVENTO BOTÓN EDITAR
+    $(document).on('click', '.btn-editar', function () {
+        const producto = JSON.parse($(this).attr('data-producto'));
+        abrirModalEditar(producto);
+    });
+
+    // EVENTO GUARDAR EDICIÓN
+    $(document).on('click', '#btnGuardarEdicion', function () {
+        const formData = $('#formEditarProducto').serialize();
+        
+        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Guardando...');
+        
+        $.ajax({
+            url: APP_URL + 'app/ajax/productoAjax.php',
+            type: 'POST',
+            data: formData + '&modulo_producto=actualizar',
+            dataType: 'json',
+            success: function (response) {
+                if (response.status === 'ok') {
+                    alert('✅ Producto actualizado');
+                    $('#modalEditar').modal('hide');
+                    const idClase = $('#f_clase').val() || 0;
+                    const idTienda = $('#f_tienda').val() || 0;
+                    cargarProductos(idClase, idTienda);
+                    cargarEstadisticas();
+                } else {
+                    alert('❌ Error: ' + response.msg);
+                }
+            },
+            error: function () {
+                alert('❌ Error de conexión');
+            },
+            complete: function () {
+                $('#btnGuardarEdicion').prop('disabled', false).html('<i class="fas fa-save"></i> Guardar');
             }
         });
     });

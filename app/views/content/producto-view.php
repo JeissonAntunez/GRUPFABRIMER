@@ -303,6 +303,31 @@
             </div>
         </div>
 
+
+        <!-- Modal Editar Producto -->
+        <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                        <h5 class="modal-title" id="modalEditarLabel">
+                            <i class="fas fa-edit"></i> Editar Producto
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalEditarBody">
+                        <!-- El formulario se genera dinámicamente aquí -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="button" class="btn btn-primary" id="btnGuardarEdicion">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Tabla de Productos -->
         <div class="container-main">
             <div class="d-flex justify-content-between align-items-center mb-3">

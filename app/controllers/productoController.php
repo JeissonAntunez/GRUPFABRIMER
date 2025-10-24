@@ -121,11 +121,67 @@ class productoController extends mainController
 
 
     /*---------- Actualizar Producto ----------*/
+
+    // Agregar este método en tu productoController.php
+
+
     public function actualizarProductoControlador()
     {
-        return json_encode(["status" => "ok", "msg" => "Producto actualizado"]);
-    }
+        try {
+            $id_producto = isset($_POST['id_producto']) ? (int)$_POST['id_producto'] : 0;
 
+            if ($id_producto <= 0) {
+                return json_encode(['status' => 'error', 'msg' => 'ID inválido']);
+            }
+
+            // Usar el productoModel ya disponible en la clase
+            $conn = $this->productoModel->conectar();
+
+            // Obtener columnas de la tabla (nombre correcto: producto, no productos)
+            $stmt = $conn->query("DESCRIBE producto");
+            $columnasTabla = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+
+            // Construir SET dinámico excluyendo el ID
+            $campos = [];
+            $parametros = [];
+
+            foreach ($_POST as $campo => $valor) {
+                // Excluir campos de control
+                if ($campo === 'modulo_producto' || $campo === 'id_producto') {
+                    continue;
+                }
+
+                // Verificar que el campo existe en la tabla
+                if (in_array($campo, $columnasTabla)) {
+                    $campos[] = "$campo = ?";
+                    $parametros[] = $valor;
+                }
+            }
+
+            if (empty($campos)) {
+                return json_encode(['status' => 'error', 'msg' => 'No hay campos para actualizar']);
+            }
+
+            // Agregar el ID al final para el WHERE
+            $parametros[] = $id_producto;
+
+            // Construir y ejecutar query (nombre correcto: producto)
+            $sql = "UPDATE producto SET " . implode(', ', $campos) . " WHERE NUM_ID_PRODUCTO = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute($parametros);
+
+            return json_encode([
+                'status' => 'ok',
+                'msg' => 'Producto actualizado correctamente',
+                'campos_actualizados' => count($campos)
+            ]);
+        } catch (\Exception $e) {
+            return json_encode([
+                'status' => 'error',
+                'msg' => 'Error al actualizar: ' . $e->getMessage()
+            ]);
+        }
+    }
     /*---------- Eliminar Producto ----------*/
     public function eliminarProductoControlador()
     {
