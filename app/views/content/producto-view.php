@@ -185,14 +185,15 @@
         }
 
 
-       .table-responsive {
-    width: 100%;
-}
+        .table-responsive {
+            width: 100%;
+        }
 
-#tablaProductos {
-    width: 100% !important;
-    table-layout: auto; /* o fixed para ancho uniforme */
-}
+        #tablaProductos {
+            width: 100% !important;
+            table-layout: auto;
+            /* o fixed para ancho uniforme */
+        }
 
         @media (max-width: 768px) {
             .stats-number {
@@ -308,12 +309,78 @@
                         <button id="btnImportarCSV" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalImportar">
                             <i class="fas fa-file-upload"></i> Importar CSV
                         </button>
+                        <!-- Agregar después del botón "Descargar Plantilla" -->
+                        <button type="button" class="btn btn-success" id="btnNuevoProducto">
+                            <i class="fas fa-plus"></i> Nuevo Producto
+                        </button>
                     </div>
+
                 </div>
             </div>
         </div>
 
+        <!-- Modal Nuevo Producto Individual -->
+        <div class="modal fade" id="modalNuevoProducto" tabindex="-1" aria-labelledby="modalNuevoProductoLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header bg-success text-white">
+                        <h5 class="modal-title" id="modalNuevoProductoLabel">
+                            <i class="fas fa-plus-circle"></i> Nuevo Producto Individual
+                        </h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Selector de Clase -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label for="claseProducto" class="form-label">
+                                    <i class="fas fa-tag"></i> Clase de Producto <span class="text-danger">*</span>
+                                </label>
+                                <select class="form-select" id="claseProducto" required>
+                                    <option value="">-- Seleccione una Clase --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="tiendaProducto" class="form-label">
+                                    <i class="fas fa-store"></i> Tienda (Opcional)
+                                </label>
+                                <select class="form-select" id="tiendaProducto">
+                                    <option value="0">-- Sin Tienda Específica --</option>
+                                </select>
+                            </div>
+                        </div>
 
+                        <hr>
+
+                        <!-- Formulario Dinámico -->
+                        <div id="alertaSeleccionClase" class="alert alert-info">
+                            <i class="fas fa-info-circle"></i> Seleccione una clase para ver los campos disponibles
+                        </div>
+
+                        <form id="formNuevoProducto" style="display: none;">
+                            <div class="row" id="camposProducto">
+                                <!-- Los campos se generarán dinámicamente aquí -->
+                            </div>
+                        </form>
+
+                        <div id="loadingCampos" style="display: none;" class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Cargando...</span>
+                            </div>
+                            <p class="mt-2">Cargando campos de plantilla...</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                        <button type="button" class="btn btn-success" id="btnGuardarProducto" style="display: none;">
+                            <i class="fas fa-save"></i> Guardar Producto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Modal Editar Producto -->
         <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -345,18 +412,15 @@
                     <i class="fas fa-list"></i> Listado de Productos
                     <small class="text-muted" id="totalMostrado">(0)</small>
                 </h4>
-                <button id="btnAgregar" class="btn btn-gradient">
-                    <i class="fas fa-plus-circle"></i> Nuevo Producto
-                </button>
+            
             </div>
 
             <div class="table-container">
-                <!-- <div class="table-responsive">
-                    <table id="tablaProductos" class="table table-hover table-sm table-bordered"> -->
-<div class="table-responsive">
-    <table id="tablaProductos" class="table table-striped table-hover w-100"></table>
+               
+                <div class="table-responsive">
+                    <table id="tablaProductos" class="table table-striped table-hover w-100"></table>
 
-                        <!-- La tabla se construirá dinámicamente -->
+                 
                     </table>
                 </div>
             </div>
@@ -388,7 +452,7 @@
                             <h6 class="fw-bold mb-3"><i class="fas fa-lightbulb"></i> Tipos de Plantillas Disponibles:</h6>
 
                             <div class="mb-3">
-                                <strong>1️⃣ Plantilla Vacía (Recomendada para nuevos productos)</strong>
+                                <strong> Plantilla Vacía (Recomendada para nuevos productos)</strong>
                                 <ul class="mt-2 mb-2">
                                     <li>Contiene <strong>todos los campos</strong> de la tabla producto</li>
                                     <li>Sin datos, lista para completar</li>
@@ -398,7 +462,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <strong>2️⃣ Plantilla Específica (Para productos con configuración)</strong>
+                                <strong>Plantilla Específica (Para productos con configuración)</strong>
                                 <ul class="mt-2 mb-2">
                                     <li>Requiere <strong>seleccionar Clase</strong> en los filtros</li>
                                     <li>Genera campos según configuración de plantilla</li>
@@ -443,17 +507,17 @@
     </div>
 
 
-    <!-- jQuery -->
+   
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 
-    <!-- Bootstrap 5 -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- DataTables -->
+ 
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-    <!-- SweetAlert2 -->
+ 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -462,7 +526,7 @@
 
     <script src="<?php echo APP_URL; ?>app/views/js/producto2.js"></script>
 
-    <!-- Datos PHP para JavaScript -->
+
     <script id="dataClases" type="application/json">
         <?php
         $clasesArray = [];

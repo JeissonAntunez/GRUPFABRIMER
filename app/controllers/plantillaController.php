@@ -156,125 +156,281 @@ class plantillaController extends mainController
         }
     }
 
+
     /*---------- Registrar Detalle ----------*/
     public function registrarDetalleControlador()
     {
-        $id_plantilla = $this->limpiarCadena($_POST['NUM_ID_PLANTILLA']);
-        $grupo = $this->limpiarCadena($_POST['VCH_GRUPO'] ?? '');
-        $campo = $this->limpiarCadena($_POST['VCH_CAMPO'] ?? '');
-        $nombre = $this->limpiarCadena($_POST['VCH_NOMBRE_PLANTILLA'] ?? '');
-        $descripcion = $this->limpiarCadena($_POST['VCH_DESCRIPCION'] ?? '');
-        $juego = $this->limpiarCadena($_POST['VCH_JUEGO'] ?? '');
-        $codigo = $this->limpiarCadena($_POST['VCH_CODIGO'] ?? '');
-        $estado = $this->limpiarCadena($_POST['VCH_ESTADO'] ?? '1');
-        $obligatorio = $this->limpiarCadena($_POST['VCH_OBLIGATORIO'] ?? 'N');
-        $orden = $this->limpiarCadena($_POST['NUM_ORDEN'] ?? '1');
+        try {
+            // Log de entrada
+            error_log("=== REGISTRAR DETALLE ===");
+            error_log("POST recibido: " . print_r($_POST, true));
 
-        // Validaciones
-        if (empty($id_plantilla)) {
+            $id_plantilla = $this->limpiarCadena($_POST['NUM_ID_PLANTILLA'] ?? '');
+            $grupo = $this->limpiarCadena($_POST['VCH_GRUPO'] ?? '');
+            $campo = $this->limpiarCadena($_POST['VCH_CAMPO'] ?? '');
+            $nombre = $this->limpiarCadena($_POST['VCH_NOMBRE_PLANTILLA'] ?? '');
+            $descripcion = $this->limpiarCadena($_POST['VCH_DESCRIPCION'] ?? '');
+            $juego = $this->limpiarCadena($_POST['VCH_JUEGO'] ?? '');
+            $codigo = $this->limpiarCadena($_POST['VCH_CODIGO'] ?? '');
+            $estado = $this->limpiarCadena($_POST['VCH_ESTADO'] ?? '1');
+            $obligatorio = $this->limpiarCadena($_POST['VCH_OBLIGATORIO'] ?? '0');  // ✅ CAMBIAR: 'N' → '0'
+            $orden = $this->limpiarCadena($_POST['NUM_ORDEN'] ?? '1');
+
+            error_log("Estado: $estado, Obligatorio: $obligatorio");
+
+            // Validaciones
+            if (empty($id_plantilla)) {
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'El campo ID Plantilla es obligatorio'
+                ], JSON_UNESCAPED_UNICODE);
+            }
+
+            // Convertir a entero
+            $id_plantilla = (int)$id_plantilla;
+
+            if ($id_plantilla <= 0) {
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'El ID de plantilla debe ser válido'
+                ], JSON_UNESCAPED_UNICODE);
+            }
+
+            // Verificar que la plantilla existe
+            $check_plantilla = $this->plantillaModel->buscarPlantillaPorIdModelo($id_plantilla);
+            if ($check_plantilla->rowCount() == 0) {
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'La plantilla con ID ' . $id_plantilla . ' no existe'
+                ], JSON_UNESCAPED_UNICODE);
+            }
+
+            // Obtener siguiente ID
+            $id = $this->plantillaModel->obtenerSiguienteIdDetalle();
+
+            error_log("Nuevo ID detalle: $id");
+
+            $detalle_datos_reg = [
+                [
+                    "campo_nombre" => "NUM_ID_DET_PLANTILLA",
+                    "campo_marcador" => ":ID",
+                    "campo_valor" => $id
+                ],
+                [
+                    "campo_nombre" => "NUM_ID_PLANTILLA",
+                    "campo_marcador" => ":IDPlantilla",
+                    "campo_valor" => $id_plantilla
+                ],
+                [
+                    "campo_nombre" => "VCH_GRUPO",
+                    "campo_marcador" => ":Grupo",
+                    "campo_valor" => $grupo
+                ],
+                [
+                    "campo_nombre" => "VCH_CAMPO",
+                    "campo_marcador" => ":Campo",
+                    "campo_valor" => $campo
+                ],
+                [
+                    "campo_nombre" => "VCH_NOMBRE_PLANTILLA",
+                    "campo_marcador" => ":Nombre",
+                    "campo_valor" => $nombre
+                ],
+                [
+                    "campo_nombre" => "VCH_DESCRIPCION",
+                    "campo_marcador" => ":Descripcion",
+                    "campo_valor" => $descripcion
+                ],
+                [
+                    "campo_nombre" => "VCH_JUEGO",
+                    "campo_marcador" => ":Juego",
+                    "campo_valor" => $juego
+                ],
+                [
+                    "campo_nombre" => "VCH_CODIGO",
+                    "campo_marcador" => ":Codigo",
+                    "campo_valor" => $codigo
+                ],
+                [
+                    "campo_nombre" => "VCH_ESTADO",
+                    "campo_marcador" => ":Estado",
+                    "campo_valor" => $estado  
+                ],
+                [
+                    "campo_nombre" => "VCH_OBLIGATORIO",
+                    "campo_marcador" => ":Obligatorio",
+                    "campo_valor" => $obligatorio  
+                ],
+                [
+                    "campo_nombre" => "NUM_ORDEN",
+                    "campo_marcador" => ":Orden",
+                    "campo_valor" => $orden
+                ],
+                [
+                    "campo_nombre" => "FEC_FECHA_CREACION",
+                    "campo_marcador" => ":FechaCreacion",
+                    "campo_valor" => date("Y-m-d H:i:s")
+                ],
+                [
+                    "campo_nombre" => "VCH_USER_CREACION",
+                    "campo_marcador" => ":UserCreacion",
+                    "campo_valor" => $_SESSION['usuario'] ?? 'sistema'
+                ]
+            ];
+
+            error_log("Datos preparados para insertar");
+
+            $registrar = $this->plantillaModel->registrarDetalleModelo($detalle_datos_reg);
+
+            if ($registrar->rowCount() == 1) {
+                error_log("✅ Detalle registrado exitosamente con ID: $id");
+                return json_encode([
+                    'status' => 'ok',
+                    'msg' => 'Detalle registrado correctamente',
+                    'id' => $id
+                ], JSON_UNESCAPED_UNICODE);
+            } else {
+                error_log("❌ No se insertó ningún registro");
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'No se pudo registrar el detalle en la base de datos'
+                ], JSON_UNESCAPED_UNICODE);
+            }
+        } catch (\Exception $e) {
+            error_log("❌ EXCEPCIÓN en registrarDetalleControlador: " . $e->getMessage());
+            error_log("Stack trace: " . $e->getTraceAsString());
+
             return json_encode([
                 'status' => 'error',
-                'msg' => 'El campo ID Plantilla es obligatorio'
-            ]);
-        }
-
-        // Verificar que la plantilla existe
-        $check_plantilla = $this->plantillaModel->buscarPlantillaPorIdModelo($id_plantilla);
-        if ($check_plantilla->rowCount() == 0) {
-            return json_encode([
-                'status' => 'error',
-                'msg' => 'La plantilla con ID ' . $id_plantilla . ' no existe'
-            ]);
-        }
-
-        // Obtener siguiente ID
-        $id = $this->plantillaModel->obtenerSiguienteIdDetalle();
-
-        $detalle_datos_reg = [
-            [
-                "campo_nombre" => "NUM_ID_DET_PLANTILLA",
-                "campo_marcador" => ":ID",
-                "campo_valor" => $id
-            ],
-            [
-                "campo_nombre" => "NUM_ID_PLANTILLA",
-                "campo_marcador" => ":IDPlantilla",
-                "campo_valor" => $id_plantilla
-            ],
-            [
-                "campo_nombre" => "VCH_GRUPO",
-                "campo_marcador" => ":Grupo",
-                "campo_valor" => $grupo
-            ],
-            [
-                "campo_nombre" => "VCH_CAMPO",
-                "campo_marcador" => ":Campo",
-                "campo_valor" => $campo
-            ],
-            [
-                "campo_nombre" => "VCH_NOMBRE_PLANTILLA",
-                "campo_marcador" => ":Nombre",
-                "campo_valor" => $nombre
-            ],
-            [
-                "campo_nombre" => "VCH_DESCRIPCION",
-                "campo_marcador" => ":Descripcion",
-                "campo_valor" => $descripcion
-            ],
-            [
-                "campo_nombre" => "VCH_JUEGO",
-                "campo_marcador" => ":Juego",
-                "campo_valor" => $juego
-            ],
-            [
-                "campo_nombre" => "VCH_CODIGO",
-                "campo_marcador" => ":Codigo",
-                "campo_valor" => $codigo
-            ],
-            [
-                "campo_nombre" => "VCH_ESTADO",
-                "campo_marcador" => ":Estado",
-                "campo_valor" => $estado
-            ],
-            [
-                "campo_nombre" => "VCH_OBLIGATORIO",
-                "campo_marcador" => ":Obligatorio",
-                "campo_valor" => $obligatorio
-            ],
-            [
-                "campo_nombre" => "NUM_ORDEN",
-                "campo_marcador" => ":Orden",
-                "campo_valor" => $orden
-            ],
-            [
-                "campo_nombre" => "FEC_FECHA_CREACION",
-                "campo_marcador" => ":FechaCreacion",
-                "campo_valor" => date("Y-m-d H:i:s")
-            ],
-            [
-                "campo_nombre" => "VCH_USER_CREACION",
-                "campo_marcador" => ":UserCreacion",
-                "campo_valor" => $_SESSION['usuario']
-            ]
-        ];
-
-        $registrar = $this->plantillaModel->registrarDetalleModelo($detalle_datos_reg);
-
-        if ($registrar->rowCount() == 1) {
-            return json_encode([
-                'status' => 'ok',
-                'msg' => 'Detalle registrado correctamente',
-                'id' => $id
-            ]);
-        } else {
-            return json_encode([
-                'status' => 'error',
-                'msg' => 'No se pudo registrar el detalle'
-            ]);
+                'msg' => 'Error al registrar: ' . $e->getMessage()
+            ], JSON_UNESCAPED_UNICODE);
         }
     }
 
     /*---------- Actualizar Plantilla ----------*/
+
+    public function actualizarDetalleControlador()
+    {
+        try {
+            $id = $this->limpiarCadena($_POST['NUM_ID_DET_PLANTILLA']);
+
+            // Verificar que el detalle existe
+            $datos = $this->plantillaModel->buscarDetallePorIdModelo($id);
+            if ($datos->rowCount() <= 0) {
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'No se encontró el detalle'
+                ], JSON_UNESCAPED_UNICODE);
+            }
+
+            $id_plantilla = $this->limpiarCadena($_POST['NUM_ID_PLANTILLA']);
+            $grupo = $this->limpiarCadena($_POST['VCH_GRUPO'] ?? '');
+            $campo = $this->limpiarCadena($_POST['VCH_CAMPO'] ?? '');
+            $nombre = $this->limpiarCadena($_POST['VCH_NOMBRE_PLANTILLA'] ?? '');
+            $descripcion = $this->limpiarCadena($_POST['VCH_DESCRIPCION'] ?? '');
+            $juego = $this->limpiarCadena($_POST['VCH_JUEGO'] ?? '');
+            $codigo = $this->limpiarCadena($_POST['VCH_CODIGO'] ?? '');
+            $estado = $this->limpiarCadena($_POST['VCH_ESTADO']);
+            $obligatorio = $this->limpiarCadena($_POST['VCH_OBLIGATORIO'] ?? '0');  
+            $orden = $this->limpiarCadena($_POST['NUM_ORDEN'] ?? '1');
+
+            if (empty($id_plantilla)) {
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'El campo ID Plantilla es obligatorio'
+                ], JSON_UNESCAPED_UNICODE);
+            }
+
+            $detalle_datos_up = [
+                [
+                    "campo_nombre" => "NUM_ID_PLANTILLA",
+                    "campo_marcador" => ":IDPlantilla",
+                    "campo_valor" => $id_plantilla
+                ],
+                [
+                    "campo_nombre" => "VCH_GRUPO",
+                    "campo_marcador" => ":Grupo",
+                    "campo_valor" => $grupo
+                ],
+                [
+                    "campo_nombre" => "VCH_CAMPO",
+                    "campo_marcador" => ":Campo",
+                    "campo_valor" => $campo
+                ],
+                [
+                    "campo_nombre" => "VCH_NOMBRE_PLANTILLA",
+                    "campo_marcador" => ":Nombre",
+                    "campo_valor" => $nombre
+                ],
+                [
+                    "campo_nombre" => "VCH_DESCRIPCION",
+                    "campo_marcador" => ":Descripcion",
+                    "campo_valor" => $descripcion
+                ],
+                [
+                    "campo_nombre" => "VCH_JUEGO",
+                    "campo_marcador" => ":Juego",
+                    "campo_valor" => $juego
+                ],
+                [
+                    "campo_nombre" => "VCH_CODIGO",
+                    "campo_marcador" => ":Codigo",
+                    "campo_valor" => $codigo
+                ],
+                [
+                    "campo_nombre" => "VCH_ESTADO",
+                    "campo_marcador" => ":Estado",
+                    "campo_valor" => $estado
+                ],
+                [
+                    "campo_nombre" => "VCH_OBLIGATORIO",
+                    "campo_marcador" => ":Obligatorio",
+                    "campo_valor" => $obligatorio  
+                ],
+                [
+                    "campo_nombre" => "NUM_ORDEN",
+                    "campo_marcador" => ":Orden",
+                    "campo_valor" => $orden
+                ],
+                [
+                    "campo_nombre" => "FEC_FECHA_MODIFICACION",
+                    "campo_marcador" => ":FechaModificacion",
+                    "campo_valor" => date("Y-m-d H:i:s")
+                ],
+                [
+                    "campo_nombre" => "VCH_USER_MODIFICACION",
+                    "campo_marcador" => ":UserModificacion",
+                    "campo_valor" => $_SESSION['usuario'] ?? 'sistema'
+                ]
+            ];
+
+            $condicion = [
+                "condicion_campo" => "NUM_ID_DET_PLANTILLA",
+                "condicion_marcador" => ":ID",
+                "condicion_valor" => $id
+            ];
+
+            if ($this->plantillaModel->actualizarDetalleModelo($detalle_datos_up, $condicion)) {
+                return json_encode([
+                    'status' => 'ok',
+                    'msg' => 'Detalle actualizado correctamente'
+                ], JSON_UNESCAPED_UNICODE);
+            } else {
+                return json_encode([
+                    'status' => 'error',
+                    'msg' => 'No se pudo actualizar el detalle'
+                ], JSON_UNESCAPED_UNICODE);
+            }
+        } catch (\Exception $e) {
+            error_log("Error en actualizarDetalleControlador: " . $e->getMessage());
+            return json_encode([
+                'status' => 'error',
+                'msg' => 'Error al actualizar: ' . $e->getMessage()
+            ], JSON_UNESCAPED_UNICODE);
+        }
+    }
+    /*---------- Actualizar Detalle ----------*/
+
     public function actualizarPlantillaControlador()
     {
         $id = $this->limpiarCadena($_POST['NUM_ID_PLANTILLA']);
@@ -376,121 +532,12 @@ class plantillaController extends mainController
         }
     }
 
-    /*---------- Actualizar Detalle ----------*/
-    public function actualizarDetalleControlador()
-    {
-        $id = $this->limpiarCadena($_POST['NUM_ID_DET_PLANTILLA']);
 
-        // Verificar que el detalle existe
-        $datos = $this->plantillaModel->buscarDetallePorIdModelo($id);
-        if ($datos->rowCount() <= 0) {
-            return json_encode([
-                'status' => 'error',
-                'msg' => 'No se encontró el detalle'
-            ]);
-        }
-
-        $id_plantilla = $this->limpiarCadena($_POST['NUM_ID_PLANTILLA']);
-        $grupo = $this->limpiarCadena($_POST['VCH_GRUPO'] ?? '');
-        $campo = $this->limpiarCadena($_POST['VCH_CAMPO'] ?? '');
-        $nombre = $this->limpiarCadena($_POST['VCH_NOMBRE_PLANTILLA'] ?? '');
-        $descripcion = $this->limpiarCadena($_POST['VCH_DESCRIPCION'] ?? '');
-        $juego = $this->limpiarCadena($_POST['VCH_JUEGO'] ?? '');
-        $codigo = $this->limpiarCadena($_POST['VCH_CODIGO'] ?? '');
-        $estado = $this->limpiarCadena($_POST['VCH_ESTADO']);
-        $obligatorio = $this->limpiarCadena($_POST['VCH_OBLIGATORIO'] ?? 'N');
-        $orden = $this->limpiarCadena($_POST['NUM_ORDEN'] ?? '1');
-
-        if (empty($id_plantilla)) {
-            return json_encode([
-                'status' => 'error',
-                'msg' => 'El campo ID Plantilla es obligatorio'
-            ]);
-        }
-
-        $detalle_datos_up = [
-            [
-                "campo_nombre" => "NUM_ID_PLANTILLA",
-                "campo_marcador" => ":IDPlantilla",
-                "campo_valor" => $id_plantilla
-            ],
-            [
-                "campo_nombre" => "VCH_GRUPO",
-                "campo_marcador" => ":Grupo",
-                "campo_valor" => $grupo
-            ],
-            [
-                "campo_nombre" => "VCH_CAMPO",
-                "campo_marcador" => ":Campo",
-                "campo_valor" => $campo
-            ],
-            [
-                "campo_nombre" => "VCH_NOMBRE_PLANTILLA",
-                "campo_marcador" => ":Nombre",
-                "campo_valor" => $nombre
-            ],
-            [
-                "campo_nombre" => "VCH_DESCRIPCION",
-                "campo_marcador" => ":Descripcion",
-                "campo_valor" => $descripcion
-            ],
-            [
-                "campo_nombre" => "VCH_JUEGO",
-                "campo_marcador" => ":Juego",
-                "campo_valor" => $juego
-            ],
-            [
-                "campo_nombre" => "VCH_CODIGO",
-                "campo_marcador" => ":Codigo",
-                "campo_valor" => $codigo
-            ],
-            [
-                "campo_nombre" => "VCH_ESTADO",
-                "campo_marcador" => ":Estado",
-                "campo_valor" => $estado
-            ],
-            [
-                "campo_nombre" => "VCH_OBLIGATORIO",
-                "campo_marcador" => ":Obligatorio",
-                "campo_valor" => $obligatorio
-            ],
-            [
-                "campo_nombre" => "NUM_ORDEN",
-                "campo_marcador" => ":Orden",
-                "campo_valor" => $orden
-            ],
-            [
-                "campo_nombre" => "FEC_FECHA_MODIFICACION",
-                "campo_marcador" => ":FechaModificacion",
-                "campo_valor" => date("Y-m-d H:i:s")
-            ],
-            [
-                "campo_nombre" => "VCH_USER_MODIFICACION",
-                "campo_marcador" => ":UserModificacion",
-                "campo_valor" => $_SESSION['usuario']
-            ]
-        ];
-
-        $condicion = [
-            "condicion_campo" => "NUM_ID_DET_PLANTILLA",
-            "condicion_marcador" => ":ID",
-            "condicion_valor" => $id
-        ];
-
-        if ($this->plantillaModel->actualizarDetalleModelo($detalle_datos_up, $condicion)) {
-            return json_encode([
-                'status' => 'ok',
-                'msg' => 'Detalle actualizado correctamente'
-            ]);
-        } else {
-            return json_encode([
-                'status' => 'error',
-                'msg' => 'No se pudo actualizar el detalle'
-            ]);
-        }
-    }
 
     /*---------- Actualizar Estado Plantilla ----------*/
+
+
+
     public function actualizarEstadoPlantillaControlador()
     {
         $id = $this->limpiarCadena($_POST['id']);
@@ -621,12 +668,22 @@ class plantillaController extends mainController
     }
 
     /*---------- Listar Detalles ----------*/
+
+
     public function listarDetallesControlador($idPlantilla = 0, $idClase = 0, $idTienda = 0)
     {
-        if ($idPlantilla == 0 && $idClase == 0 && $idTienda == 0) {
-            return $this->plantillaModel->listarTodosDetallesModelo();
-        } else {
-            return $this->plantillaModel->listarDetallesFiltrosModelo($idPlantilla, $idClase, $idTienda);
+        error_log("🔍 listarDetallesControlador llamado con: idPlantilla=$idPlantilla, idClase=$idClase, idTienda=$idTienda");
+
+        try {
+            $detalles = $this->plantillaModel->listarDetallesModelo($idPlantilla, $idClase, $idTienda);
+
+            $count = $detalles->rowCount();
+            error_log("✅ Se encontraron $count detalles");
+
+            return $detalles;
+        } catch (\Exception $e) {
+            error_log("❌ Error en listarDetallesControlador: " . $e->getMessage());
+            throw $e;
         }
     }
 }

@@ -23,7 +23,7 @@ class claseModel extends mainModel
 		return $sql;
 	}
 
-	/*---------- ⭐ NUEVO: Buscar clase por ID (nomenclatura modelo) ----------*/
+	/*----------Buscar clase por ID ----------*/
 	public function buscarClasePorIdModelo($id)
 	{
 		$sql = $this->conectar()->prepare("SELECT * FROM clase WHERE NUM_ID_CLASE = :ID LIMIT 1");

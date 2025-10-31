@@ -9,15 +9,15 @@ class listaController extends mainController
 {
 
     private $listaModel;
-    private $tiendaModel;  
+    private $tiendaModel;
 
     public function __construct()
     {
         $this->listaModel = new listaModel();
-        $this->tiendaModel = new tiendaModel(); 
+        $this->tiendaModel = new tiendaModel();
     }
 
-    
+
     public function obtenerSiguienteIdControlador()
     {
         $nextId = $this->listaModel->obtenerSiguienteIdLista();
@@ -29,7 +29,8 @@ class listaController extends mainController
     }
 
 
-   
+
+
     public function registrarListaControlador()
     {
         $tienda_id = $this->limpiarCadena($_POST['NUM_ID_TIENDA']);
@@ -56,19 +57,19 @@ class listaController extends mainController
             return json_encode($alerta);
         }
 
-        # Verificando integridad de los datos
-        if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,100}", $juego)) {
+        # ⭐ VALIDACIÓN FLEXIBLE: Acepta guiones bajos
+        if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s_-]{1,100}", $juego)) {
             $alerta = [
                 "status" => "error",
-                "msg" => "El JUEGO no coincide con el formato solicitado"
+                "msg" => "El JUEGO contiene caracteres no permitidos"
             ];
             return json_encode($alerta);
         }
 
-        if ($this->verificarDatos("[a-zA-Z0-9-]{3,50}", $codigo)) {
+        if ($this->verificarDatos("[a-zA-Z0-9\s_-]{1,50}", $codigo)) {
             $alerta = [
                 "status" => "error",
-                "msg" => "El CÓDIGO no coincide con el formato solicitado"
+                "msg" => "El CÓDIGO contiene caracteres no permitidos"
             ];
             return json_encode($alerta);
         }
@@ -132,7 +133,6 @@ class listaController extends mainController
         $registrar_lista = $this->listaModel->registrarListaModelo($lista_datos_reg);
 
         if ($registrar_lista->rowCount() == 1) {
-            // Obtener nombre de la tienda para la respuesta
             $tienda_data = $check_tienda->fetch();
 
             $alerta = [
@@ -144,7 +144,8 @@ class listaController extends mainController
                 "descripcion" => $descripcion,
                 "estado" => $estado,
                 "usuario" => $_SESSION['usuario'],
-                "fecha" => date("Y-m-d H:i:s")
+                "fecha" => date("Y-m-d H:i:s"),
+                "msg" => "Lista registrada correctamente"
             ];
         } else {
             $alerta = [
@@ -157,10 +158,10 @@ class listaController extends mainController
     }
 
 
+
     /*---------- Controlador actualizar lista ----------*/
     public function actualizarListaControlador()
     {
-
         $id = $this->limpiarCadena($_POST['NUM_ID_LISTA']);
 
         # Verificando lista
@@ -201,19 +202,20 @@ class listaController extends mainController
             return json_encode($alerta);
         }
 
-        # Verificando integridad de los datos
-        if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9 ]{3,100}", $juego)) {
+        # VALIDACIÓN FLEXIBLE PARA JUEGO: Acepta letras, números, espacios, guiones y guiones bajos
+        if ($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s_-]{1,100}", $juego)) {
             $alerta = [
                 "status" => "error",
-                "msg" => "El JUEGO no coincide con el formato solicitado"
+                "msg" => "El JUEGO contiene caracteres no permitidos"
             ];
             return json_encode($alerta);
         }
 
-        if ($this->verificarDatos("[a-zA-Z0-9-]{3,50}", $codigo)) {
+        #VALIDACIÓN FLEXIBLE PARA CÓDIGO: Acepta letras, números, espacios, guiones y guiones bajos
+        if ($this->verificarDatos("[a-zA-Z0-9\s_-]{1,50}", $codigo)) {
             $alerta = [
                 "status" => "error",
-                "msg" => "El CÓDIGO no coincide con el formato solicitado"
+                "msg" => "El CÓDIGO contiene caracteres no permitidos"
             ];
             return json_encode($alerta);
         }
@@ -287,7 +289,8 @@ class listaController extends mainController
                 "descripcion" => $descripcion,
                 "estado" => $estado,
                 "userM" => $_SESSION['usuario'],
-                "fecha" => date("Y-m-d H:i:s")
+                "fecha" => date("Y-m-d H:i:s"),
+                "msg" => "Lista actualizada correctamente"
             ];
         } else {
             $alerta = [
@@ -298,7 +301,6 @@ class listaController extends mainController
 
         return json_encode($alerta);
     }
-
 
     /*---------- Controlador actualizar solo estado ----------*/
     public function actualizarEstadoControlador()

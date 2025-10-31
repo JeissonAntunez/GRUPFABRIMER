@@ -242,7 +242,7 @@ class plantillaModel extends mainModel
     }
 
 
-    /*========== NUEVOS MÉTODOS PARA TABLA DINÁMICA ==========*/
+
 
     /*---------- Obtener Plantilla por Clase y Tienda ----------*/
     public function obtenerPlantillaPorClaseTiendaModelo($idClase, $idTienda)
@@ -275,5 +275,55 @@ class plantillaModel extends mainModel
         $query->execute();
 
         return $query;
+    }
+    // En plantillaModel.php
+
+    public function listarDetallesModelo($idPlantilla = 0, $idClase = 0, $idTienda = 0)
+    {
+        $sql = "SELECT 
+                pd.*,
+                t.VCH_TIENDA as NOMBRE_TIENDA,
+                c.VCH_NOMBRE as NOMBRE_CLASE,
+                p.NUM_ID_TIENDA,
+                p.NUM_ID_CLASE
+            FROM plant_detalle pd
+            INNER JOIN plantilla p ON pd.NUM_ID_PLANTILLA = p.NUM_ID_PLANTILLA
+            LEFT JOIN tienda t ON p.NUM_ID_TIENDA = t.NUM_ID_TIENDA
+            LEFT JOIN clase c ON p.NUM_ID_CLASE = c.NUM_ID_CLASE
+            WHERE 1=1";
+
+        $params = [];
+
+        // Filtro principal: por ID de plantilla específica
+        if ($idPlantilla > 0) {
+            $sql .= " AND pd.NUM_ID_PLANTILLA = :IdPlantilla";
+            $params[':IdPlantilla'] = $idPlantilla;
+        }
+
+        // Filtros adicionales
+        if ($idClase > 0) {
+            $sql .= " AND p.NUM_ID_CLASE = :IdClase";
+            $params[':IdClase'] = $idClase;
+        }
+
+        if ($idTienda > 0) {
+            $sql .= " AND p.NUM_ID_TIENDA = :IdTienda";
+            $params[':IdTienda'] = $idTienda;
+        }
+
+        $sql .= " ORDER BY pd.NUM_ORDEN ASC, pd.NUM_ID_DET_PLANTILLA ASC";
+
+        error_log("🔍 SQL: " . $sql);
+        error_log("🔍 Params: " . json_encode($params));
+
+        $stmt = $this->conectar()->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value, \PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+
+        return $stmt;
     }
 }

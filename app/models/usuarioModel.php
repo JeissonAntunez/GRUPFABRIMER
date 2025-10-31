@@ -23,6 +23,6 @@ class usuarioModel extends mainModel
         return $sql;
     }
 
-    // Agrega más métodos específicos de usuario aquí...
+    
 
 }

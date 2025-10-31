@@ -92,8 +92,8 @@ class imagenController extends mainController
         }
 
         // CALCULAR RUTAS ABSOLUTAS
-        // Obtener la ruta raíz del proyecto (donde está index.php)
-        $raizProyecto = dirname(dirname(__DIR__)); // Sube 2 niveles desde app/controllers
+ 
+        $raizProyecto = dirname(dirname(__DIR__)); 
         
         // Carpeta física (absoluta) donde se guardará
         $carpetaFisica = $raizProyecto . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'imgs' . DIRECTORY_SEPARATOR . 'productos' . DIRECTORY_SEPARATOR;

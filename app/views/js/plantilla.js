@@ -194,11 +194,11 @@ $(document).ready(function() {
                         ]);
                     });
                     tablaPlantillas.draw();
-                    console.log('✅ Plantillas cargadas:', response.data.length);
+                    console.log('Plantillas cargadas:', response.data.length);
                 }
             },
             error: function(xhr) {
-                console.error('❌ Error cargando plantillas:', xhr);
+                console.error(' Error cargando plantillas:', xhr);
                 Swal.fire('Error', 'Error al cargar las plantillas', 'error');
             }
         });
@@ -223,7 +223,6 @@ $(document).ready(function() {
                     tablaDetalles.clear();
                     response.data.forEach(row => {
                         const plantillaInfo = `P-${row.NUM_ID_PLANTILLA}`;
-                        // Usar el nombre de tienda que viene del backend
                         const nombreTienda = row.NOMBRE_TIENDA || getNombreTienda(row.NUM_ID_TIENDA) || 'N/A';
                         
                         tablaDetalles.row.add([
@@ -240,11 +239,11 @@ $(document).ready(function() {
                         ]);
                     });
                     tablaDetalles.draw();
-                    console.log('✅ Detalles cargados:', response.data.length);
+                    console.log(' Detalles cargados:', response.data.length);
                 }
             },
             error: function(xhr) {
-                console.error('❌ Error cargando detalles:', xhr);
+                console.error(' Error cargando detalles:', xhr);
                 Swal.fire('Error', 'Error al cargar los detalles', 'error');
             }
         });
@@ -339,8 +338,8 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                console.error('❌ Error guardando plantilla:', {xhr, status, error});
-                console.error('❌ Respuesta del servidor:', xhr.responseText);
+                console.error(' Error guardando plantilla:', {xhr, status, error});
+                console.error(' Respuesta del servidor:', xhr.responseText);
                 Swal.fire('Error', 'Error de conexión al guardar: ' + error, 'error');
             }
         });
@@ -419,7 +418,7 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr) {
-                console.error('❌ Error actualizando plantilla:', xhr);
+                console.error(' Error actualizando plantilla:', xhr);
                 Swal.fire('Error', 'Error de conexión al actualizar', 'error');
             }
         });
@@ -563,7 +562,7 @@ $(document).ready(function() {
         $('html, body').animate({ scrollTop: $('#tablaDetalles').offset().top - 100 }, 300);
     });
 
-    // ========== GUARDAR DETALLE ==========
+    // ========== GUARDAR DETALLE ========== 
     $(document).on('click', '.guardar-detalle', function() {
         const $row = $(this).closest('tr');
 
@@ -577,7 +576,7 @@ $(document).ready(function() {
             VCH_JUEGO: $row.find('input[name="VCH_JUEGO"]').val(),
             VCH_CODIGO: $row.find('input[name="VCH_CODIGO"]').val(),
             VCH_ESTADO: $row.find('select[name="VCH_ESTADO"]').val(),
-            VCH_OBLIGATORIO: 'N',
+            VCH_OBLIGATORIO: '0',  
             NUM_ORDEN: $row.find('input[name="NUM_ORDEN"]').val()
         };
 
@@ -586,12 +585,15 @@ $(document).ready(function() {
             return;
         }
 
+        console.log('📤 Enviando detalle:', formData);
+
         $.ajax({
             url: APP_URL + 'app/ajax/plantillaAjax.php',
             method: 'POST',
             data: formData,
             dataType: 'json',
             success: function(response) {
+                console.log('📥 Respuesta:', response);
                 if (response.status === 'ok') {
                     Swal.fire({
                         icon: 'success',
@@ -607,7 +609,8 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr) {
-                console.error('❌ Error guardando detalle:', xhr);
+                console.error(' Error guardando detalle:', xhr);
+                console.error(' Respuesta completa:', xhr.responseText);
                 Swal.fire('Error', 'Error de conexión al guardar', 'error');
             }
         });
@@ -672,7 +675,7 @@ $(document).ready(function() {
         `);
     });
 
-    // ========== ACTUALIZAR DETALLE ==========
+    // ========== ACTUALIZAR DETALLE ========== 
     $(document).on('click', '.actualizar-detalle', function() {
         const $row = $(this).closest('tr');
         const id = $(this).data('id');
@@ -688,9 +691,11 @@ $(document).ready(function() {
             VCH_JUEGO: $row.find('input[name="VCH_JUEGO"]').val(),
             VCH_CODIGO: $row.find('input[name="VCH_CODIGO"]').val(),
             VCH_ESTADO: $row.find('select[name="VCH_ESTADO"]').val(),
-            VCH_OBLIGATORIO: 'N',
+            VCH_OBLIGATORIO: '0', 
             NUM_ORDEN: $row.find('input[name="NUM_ORDEN"]').val()
         };
+
+        console.log('📤 Actualizando detalle:', formData);
 
         $.ajax({
             url: APP_URL + 'app/ajax/plantillaAjax.php',
@@ -698,6 +703,7 @@ $(document).ready(function() {
             data: formData,
             dataType: 'json',
             success: function(response) {
+                console.log(' Respuesta:', response);
                 if (response.status === 'ok') {
                     Swal.fire({
                         icon: 'success',
@@ -712,7 +718,8 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr) {
-                console.error('❌ Error actualizando detalle:', xhr);
+                console.error(' Error actualizando detalle:', xhr);
+                console.error(' Respuesta completa:', xhr.responseText);
                 Swal.fire('Error', 'Error de conexión al actualizar', 'error');
             }
         });
@@ -803,4 +810,154 @@ $(document).ready(function() {
     cargarPlantillas();
     cargarDetalles();
 
+
+// ========== SELECCIONAR PLANTILLA Y FILTRAR DETALLES (VERSIÓN ESTABLE) ==========
+$(document).on('click', '#tablaPlantillas tbody tr td:first-child', function(e) {
+    // Solo responder a clicks en la primera columna (TIENDA)
+    e.stopPropagation();
+    
+    const $row = $(this).closest('tr');
+    
+    // Ignorar si es una fila en edición
+    if ($row.hasClass('editing-row') || $row.hasClass('adding-row')) {
+        return;
+    }
+
+    // Remover selección previa
+    $('#tablaPlantillas tbody tr').removeClass('selected-row');
+    
+    // Marcar esta fila como seleccionada
+    $row.addClass('selected-row');
+
+    // Buscar el botón de editar para obtener los datos
+    const btnEditar = $row.find('.btn-editar-plantilla');
+    
+    if (btnEditar.length === 0) {
+        console.warn('⚠️ No se encontró botón de editar en la fila');
+        return;
+    }
+
+    const idPlantilla = btnEditar.data('id');
+    const idTienda = btnEditar.data('tienda');
+    const idClase = btnEditar.data('clase');
+
+    console.log('📋 Plantilla seleccionada:', {
+        id: idPlantilla,
+        tienda: idTienda,
+        clase: idClase
+    });
+
+    if (!idPlantilla) {
+        Swal.fire('Error', 'No se pudo obtener el ID de la plantilla', 'error');
+        return;
+    }
+
+    // Guardar ID
+    plantillaSeleccionadaId = idPlantilla;
+
+    // Toast rápido sin bloquear
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
+    });
+    
+    Toast.fire({
+        icon: 'info',
+        title: 'Filtrando detalles...'
+    });
+
+    // Cargar detalles sin mostrar loading modal
+    $.ajax({
+        url: APP_URL + 'app/ajax/plantillaAjax.php',
+        method: 'POST',
+        data: {
+            modulo_plantilla: 'listar_detalles',
+            id_plantilla: parseInt(idPlantilla),
+            f_clase: parseInt(idClase) || 0,
+            f_tienda: parseInt(idTienda) || 0
+        },
+        dataType: 'json',
+        success: function(response) {
+            if (response.status === 'ok') {
+                // ⭐ CLAVE: clear sin draw para evitar parpadeos
+                tablaDetalles.clear();
+                
+                // Agregar filas
+                response.data.forEach(row => {
+                    const plantillaInfo = `P-${row.NUM_ID_PLANTILLA}`;
+                    const nombreTienda = row.NOMBRE_TIENDA || getNombreTienda(row.NUM_ID_TIENDA) || 'N/A';
+                    
+                    tablaDetalles.row.add([
+                        plantillaInfo,
+                        nombreTienda,
+                        row.VCH_GRUPO || '-',
+                        row.VCH_CAMPO || '-',
+                        row.VCH_NOMBRE_PLANTILLA || '-',
+                        row.VCH_JUEGO || '-',
+                        row.VCH_CODIGO || '-',
+                        renderEstadoToggle(row.NUM_ID_DET_PLANTILLA, row.VCH_ESTADO, 'detalle'),
+                        row.NUM_ORDEN || '1',
+                        renderAccionesDetalle(row)
+                    ]);
+                });
+                
+                // ⭐ Un solo draw al final
+                tablaDetalles.draw(false); // false = no resetear paginación
+                
+                // Scroll suave
+                $('html, body').animate({
+                    scrollTop: $('#tablaDetalles').offset().top - 100
+                }, 300);
+                
+                // Notificación de éxito
+                Toast.fire({
+                    icon: 'success',
+                    title: `${response.data.length} detalle(s)`,
+                    text: `Plantilla P-${idPlantilla}`
+                });
+                
+                console.log('✅ Detalles cargados:', response.data.length);
+            } else {
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: response.msg || 'No se pudieron cargar detalles'
+                });
+            }
+        },
+        error: function(xhr) {
+            console.error('❌ Error:', xhr);
+            Toast.fire({
+                icon: 'error',
+                title: 'Error de conexión'
+            });
+        }
+    });
+});
+
+// ========== INDICADOR VISUAL: Hover en primera columna ==========
+$(document).on('mouseenter', '#tablaPlantillas tbody tr td:first-child', function() {
+    if (!$(this).closest('tr').hasClass('editing-row') && !$(this).closest('tr').hasClass('adding-row')) {
+        $(this).css('cursor', 'pointer');
+        $(this).css('background', '#e0e7ff');
+    }
+});
+
+$(document).on('mouseleave', '#tablaPlantillas tbody tr td:first-child', function() {
+    if (!$(this).closest('tr').hasClass('selected-row')) {
+        $(this).css('background', '');
+    }
+});
+
+// ========== LIMPIAR SELECCIÓN ==========
+$('#btnClear').off('click').on('click', function() {
+    $('#tablaPlantillas tbody tr').removeClass('selected-row');
+    plantillaSeleccionadaId = null;
+    $('#f_clase, #f_tienda').val('0');
+    cargarPlantillas();
+    cargarDetalles();
+});
 });

@@ -8,7 +8,7 @@ if (isset($_POST['modulo_plantilla'])) {
     require_once "../controllers/plantillaController.php";
     $insPlantilla = new app\controllers\plantillaController();
 
-    // ========== PLANTILLAS ==========
+
     if ($_POST['modulo_plantilla'] == "registrar_plantilla") {
         echo $insPlantilla->registrarPlantillaControlador();
     }
@@ -39,7 +39,7 @@ if (isset($_POST['modulo_plantilla'])) {
         echo json_encode(['status' => 'ok', 'data' => $data], JSON_UNESCAPED_UNICODE);
     }
 
-    // ========== DETALLES ==========
+   
     if ($_POST['modulo_plantilla'] == "registrar_detalle") {
         echo $insPlantilla->registrarDetalleControlador();
     }

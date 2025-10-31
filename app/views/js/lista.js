@@ -1,15 +1,28 @@
 $(document).ready(function() {
 
-    // ========== INICIALIZAR DATATABLES ==========
+    // ========== INICIALIZAR DATATABLES  ==========
     const table = $('#tablaListas').DataTable({
         language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+            processing: "Procesando...",
+            lengthMenu: "Mostrar _MENU_ registros",
+            zeroRecords: "No se encontraron resultados",
+            emptyTable: "Ningún dato disponible en esta tabla",
+            info: "Mostrando _START_ a _END_ de _TOTAL_ registros",
+            infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+            infoFiltered: "(filtrado de un total de _MAX_ registros)",
+            search: "Buscar:",
+            paginate: {
+                first: "Primero",
+                last: "Último",
+                next: "Siguiente",
+                previous: "Anterior"
+            }
         },
         responsive: true,
         pageLength: 10,
         order: [[0, 'asc']],
         columnDefs: [
-            { targets: [5], orderable: false } // Columna de acciones no ordenable
+            { targets: [5], orderable: false }
         ]
     });
 
@@ -65,32 +78,93 @@ $(document).ready(function() {
     });
 
 
-    // ========== ABRIR MODAL EDITAR ==========
+    // ========== ABRIR MODAL EDITAR (CON LOGS) ==========
     $(document).on('click', '.btn-editar', function() {
         const btn = $(this);
         
-        $('#updateId').val(btn.data('id'));
-        $('#updateTienda').val(btn.data('tienda'));
-        $('#updateJuego').val(btn.data('juego'));
-        $('#updateCodigo').val(btn.data('codigo'));
-        $('#updateDescripcion').val(btn.data('descripcion'));
-        $('#updateEstado').val(btn.data('estado'));
+        const datos = {
+            id: btn.data('id'),
+            tienda: btn.data('tienda'),
+            juego: btn.data('juego'),
+            codigo: btn.data('codigo'),
+            descripcion: btn.data('descripcion'),
+            estado: btn.data('estado')
+        };
+        
+        console.log('📝 Datos originales:', datos);
+        console.log('🔤 Código (tipo):', typeof datos.codigo, '| Valor:', datos.codigo);
+        console.log('🔤 Código (length):', datos.codigo ? datos.codigo.length : 0);
+        
+        // Limpiar el código de caracteres especiales si es necesario
+        let codigoLimpio = String(datos.codigo).trim();
+        console.log('✨ Código limpio:', codigoLimpio);
+        
+        $('#updateId').val(datos.id);
+        $('#updateTienda').val(datos.tienda);
+        $('#updateJuego').val(datos.juego);
+        $('#updateCodigo').val(codigoLimpio); // Usar el código limpio
+        $('#updateDescripcion').val(datos.descripcion);
+        $('#updateEstado').val(datos.estado);
+        
+        // Verificar que se llenó correctamente
+        console.log('✅ Valores en inputs:');
+        console.log('  - ID:', $('#updateId').val());
+        console.log('  - Tienda:', $('#updateTienda').val());
+        console.log('  - Juego:', $('#updateJuego').val());
+        console.log('  - Código:', $('#updateCodigo').val());
+        console.log('  - Descripción:', $('#updateDescripcion').val());
+        console.log('  - Estado:', $('#updateEstado').val());
+        
+        // Forzar revalidación
+        $('#updateCodigo')[0].setCustomValidity('');
         
         $('#modalActualizar').modal('show');
     });
 
 
-    // ========== ACTUALIZAR LISTA ==========
+    // ========== ACTUALIZAR LISTA (CON MEJOR VALIDACIÓN) ==========
     $('#btnGuardarActualizar').on('click', function(e) {
         e.preventDefault();
 
         const form = $('#formActualizar')[0];
-        if (!form.checkValidity()) {
-            form.reportValidity();
+        
+        // Log de validación
+        console.log('🔍 Validando formulario...');
+        console.log('  - Formulario válido?', form.checkValidity());
+        
+        // Validar manualmente cada campo
+        const tienda = $('#updateTienda').val();
+        const juego = $('#updateJuego').val();
+        const codigo = $('#updateCodigo').val();
+        
+        console.log('📋 Valores a enviar:');
+        console.log('  - Tienda:', tienda);
+        console.log('  - Juego:', juego);
+        console.log('  - Código:', codigo);
+        
+        if (!tienda || tienda === '') {
+            Swal.fire('Error', 'Debe seleccionar una tienda', 'error');
             return;
         }
-
+        
+        if (!juego || juego.trim() === '') {
+            Swal.fire('Error', 'Debe ingresar un juego', 'error');
+            return;
+        }
+        
+        if (!codigo || codigo.trim() === '') {
+            Swal.fire('Error', 'Debe ingresar un código', 'error');
+            return;
+        }
+        
+        // Si todo está OK, enviar
         const formData = new FormData(form);
+        
+        // Log de lo que se envía
+        console.log('📤 Enviando datos:');
+        for (let [key, value] of formData.entries()) {
+            console.log(`  ${key}: ${value}`);
+        }
 
         $.ajax({
             url: form.action,
@@ -100,6 +174,8 @@ $(document).ready(function() {
             contentType: false,
             dataType: 'json',
             success: function(response) {
+                console.log('📥 Respuesta:', response);
+                
                 if (response.status === 'ok') {
                     Swal.fire({
                         icon: 'success',
@@ -120,7 +196,8 @@ $(document).ready(function() {
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Error:', error);
+                console.error('❌ Error:', error);
+                console.error('❌ Respuesta:', xhr.responseText);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -165,10 +242,7 @@ $(document).ready(function() {
                     dataType: 'json',
                     success: function(response) {
                         if (response.status === 'ok') {
-                            // Actualizar data attribute
                             checkbox.data('estado', nuevoEstado);
-                            
-                            // Actualizar label
                             label.removeClass('activo inactivo');
                             label.addClass(nuevoEstado == 1 ? 'activo' : 'inactivo');
                             label.text(nuevoEstado == 1 ? 'Activo' : 'Inactivo');
@@ -181,9 +255,7 @@ $(document).ready(function() {
                                 timer: 1500
                             });
                         } else {
-                            // Revertir el checkbox
                             checkbox.prop('checked', estadoActual == 1);
-                            
                             Swal.fire({
                                 icon: 'error',
                                 title: 'Error',
@@ -192,9 +264,7 @@ $(document).ready(function() {
                         }
                     },
                     error: function(xhr, status, error) {
-                        // Revertir el checkbox
                         checkbox.prop('checked', estadoActual == 1);
-                        
                         console.error('Error:', error);
                         Swal.fire({
                             icon: 'error',
@@ -204,7 +274,6 @@ $(document).ready(function() {
                     }
                 });
             } else {
-                // Revertir el checkbox si canceló
                 checkbox.prop('checked', estadoActual == 1);
             }
         });
@@ -248,7 +317,6 @@ $(document).ready(function() {
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then(() => {
-                                // Eliminar fila de DataTable
                                 table.row(row).remove().draw();
                             });
                         } else {

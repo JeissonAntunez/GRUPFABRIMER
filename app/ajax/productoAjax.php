@@ -128,4 +128,11 @@ if ($modulo) {
     if ($modulo == "estadisticas") {
         echo $insProducto->obtenerEstadisticasControlador();
     }
+ 
+    if ($modulo == "registrar_individual") {
+        echo $insProducto->registrarProductoControlador();
+    }
+    if ($modulo == "obtener_campos_plantilla") {
+    echo $insProducto->obtenerCamposPlantillaControlador();
+}
 }

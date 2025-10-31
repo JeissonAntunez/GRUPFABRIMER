@@ -1,7 +1,3 @@
-// ========================================
-// SISTEMA DE GESTIÓN DE IMÁGENES
-// imagen.js - Con Editar y Eliminar
-// ========================================
 
 console.log('=== IMAGEN.JS CARGADO ===');
 

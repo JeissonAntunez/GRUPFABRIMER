@@ -1,6 +1,6 @@
 <?php
 
-# ⭐ IMPORTANTE: Cargar librerías de Composer PRIMERO
+#  Cargar librerías de Composer PRIMERO
 require_once __DIR__ . "/vendor/autoload.php";
 
 # Autoload de clases del proyecto
